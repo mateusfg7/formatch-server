@@ -1,17 +1,21 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import prismaClient from '../../../lib/prisma'
+import prismaClient from '../../../../lib/prisma'
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { method } = req
+  const { method, query } = req
 
   switch (method) {
     case 'GET':
       try {
-        const stars = await prismaClient.star.findMany()
-        res.status(200).json({ stars })
+        const star = await prismaClient.star.findUnique({
+          where: {
+            id: Number(query.id),
+          },
+        })
+        res.status(201).json({ star })
       } catch (err) {
         console.error(err)
         res.status(500).json({ error: err })

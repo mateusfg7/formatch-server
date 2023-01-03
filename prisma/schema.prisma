@@ -1,17 +1,90 @@
-datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-  relationMode = "prisma"
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
-model Star {
-  id              Int       @default(autoincrement()) @id
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  name            String    @db.VarChar(255)
-  constellation   String    @db.VarChar(255)
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "./ERD.svg"
+  theme    = "neutral"
+  erdDebug = true
+}
+
+model User {
+  id                 String         @id @default(uuid())
+  name               String
+  email              String
+  profile_picture    String
+  subscribe          Boolean
+  saved_professional Professional[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Professional {
+  id              String    @id @default(uuid())
+  profile_picture String
+  name            String
+  email           String?
+  state           String
+  city            String
+  services        Service[]
+  biography       String
+  whatsapp        String?
+  instagram       String?
+  saved_users     User[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("professionals")
+}
+
+model Service {
+  id                       String         @id @default(uuid())
+  service_name             String
+  registered_professionals Professional[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("services")
+}
+
+model AdMeta {
+  id          String    @id @default(uuid())
+  name        String
+  logo_url    String
+  website_url String
+  articles    Article[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("ad_metadatas")
+}
+
+model Article {
+  id         String  @id @default(uuid())
+  slug       String
+  title      String
+  banner_url String?
+  content    String
+  adMetaId   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  AdMeta AdMeta? @relation(fields: [adMetaId], references: [id])
+
+  @@index([adMetaId])
+  @@map("articles")
 }
