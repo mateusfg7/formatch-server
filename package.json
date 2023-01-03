@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pscale:dev": "pscale connect formatch initial-setup --port 3309"
   },
   "dependencies": {
     "@prisma/client": "^4.8.0",
