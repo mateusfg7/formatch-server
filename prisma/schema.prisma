@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 generator erd {
@@ -84,5 +85,6 @@ model Article {
 
   AdMeta AdMeta? @relation(fields: [adMetaId], references: [id])
 
+  @@index([adMetaId])
   @@map("articles")
 }
