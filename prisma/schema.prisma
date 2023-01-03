@@ -57,3 +57,32 @@ model Service {
 
   @@map("services")
 }
+
+model AdMeta {
+  id          String    @id @default(uuid())
+  name        String
+  logo_url    String
+  website_url String
+  articles    Article[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("ad_metadatas")
+}
+
+model Article {
+  id         String  @id @default(uuid())
+  slug       String
+  title      String
+  banner_url String?
+  content    String
+  adMetaId   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  AdMeta AdMeta? @relation(fields: [adMetaId], references: [id])
+
+  @@map("articles")
+}
