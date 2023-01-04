@@ -16,35 +16,44 @@ generator erd {
 }
 
 model User {
-  id                 String         @id @default(uuid())
-  name               String
-  email              String
-  profile_picture    String
-  subscribe          Boolean
-  saved_professional Professional[]
+  id                       String         @id @default(uuid())
+  name                     String
+  email                    String
+  profile_picture_url      String
+  profile_picture_gcs_path String
+  subscribe                Boolean
+  saved_professional       Professional[]
+  owned_professional       Professional?  @relation(name: "RegisteredAsProfessional")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([email])
   @@map("users")
 }
 
 model Professional {
-  id              String    @id @default(uuid())
-  profile_picture String
-  name            String
-  email           String?
-  state           String
-  city            String
-  services        Service[]
-  biography       String
-  whatsapp        String?
-  instagram       String?
-  saved_users     User[]
+  id                       String    @id @default(uuid())
+  user_owner_id            String
+  profile_picture_url      String
+  profile_picture_gcs_path String
+  name                     String
+  email                    String?
+  phone                    String?
+  state_uf                 String
+  city                     String
+  services                 Service[]
+  biography                String
+  whatsapp                 String?
+  instagram                String?
+  saved_users              User[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  User User @relation(fields: [user_owner_id], references: [id], name: "RegisteredAsProfessional")
+
+  @@unique([user_owner_id])
   @@map("professionals")
 }
 
@@ -56,6 +65,7 @@ model Service {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([service_name])
   @@map("services")
 }
 
