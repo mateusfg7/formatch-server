@@ -12,6 +12,7 @@
     "db:erd": "prisma generate"
   },
   "dependencies": {
+    "@google-cloud/storage": "^6.8.0",
     "@prisma/client": "^4.8.0",
     "@types/node": "18.11.18",
     "@types/react": "18.0.26",
