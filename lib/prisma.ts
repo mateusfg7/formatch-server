@@ -12,4 +12,4 @@ const prismaClient =
 
 if (process.env.NODE_ENV === 'development') global.prismaClient = prismaClient
 
-export default prismaClient
+export { prismaClient }
