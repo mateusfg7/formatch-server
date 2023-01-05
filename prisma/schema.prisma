@@ -16,17 +16,17 @@ generator erd {
 }
 
 model User {
-  id                       String         @id @default(uuid())
-  name                     String
-  email                    String
-  profile_picture_url      String
-  profile_picture_gcs_path String
-  subscribe                Boolean
-  saved_professional       Professional[]
-  owned_professional       Professional?  @relation(name: "RegisteredAsProfessional")
+  id                  String         @id @default(uuid())
+  name                String
+  email               String
+  google_id           String
+  avatar_url          String
+  subscribe           Boolean
+  saved_professionals Professional[]
+  owned_professional  Professional?  @relation(name: "RegisteredAsProfessional")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@unique([email])
   @@map("users")
