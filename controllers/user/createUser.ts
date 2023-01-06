@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { z } from 'zod'
-import jwt from 'jsonwebtoken'
 
 import { prismaClient } from '../../lib/prisma'
+import { jwtSign } from '../../utils/jwt'
 
 export async function createUser(req: NextApiRequest, res: NextApiResponse) {
   const requestBodySchema = z.object({
@@ -58,15 +58,12 @@ export async function createUser(req: NextApiRequest, res: NextApiResponse) {
     })
   }
 
-  const token = jwt.sign(
-    {
-      name: user.name,
-      email: user.email,
-      avatar_url: user.avatar_url,
-      subscribe: user.subscribe,
-    },
-    process.env.JWT_SECRET as string
-  )
+  const token = jwtSign({
+    name: user.name,
+    email: user.email,
+    avatar_url: user.avatar_url,
+    subscribe: user.subscribe,
+  })
 
   return res.status(201).json({ token })
 }
