@@ -1,8 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { Prisma } from '@prisma/client'
 
-import { prismaClient } from '@lib/prisma'
-
+import { testDbConnection } from '@lib/testDbConnection'
 import { createProfessional } from '@controllers/professionals/createProfessional'
 
 export default async function handler(
@@ -11,21 +9,7 @@ export default async function handler(
 ) {
   const { method } = req
 
-  try {
-    await prismaClient.$queryRaw`SELECT 1`
-  } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === 'P1001') {
-        console.error(error)
-        return res
-          .status(500)
-          .json({ message: 'Error while connect with database.' })
-      }
-    } else {
-      console.error(error)
-      return res.status(500).json({ message: 'Internal server error.', error })
-    }
-  }
+  testDbConnection(res)
 
   if (method === 'POST') createProfessional(req, res)
   else {
