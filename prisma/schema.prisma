@@ -50,7 +50,7 @@ model Professional {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  User User @relation(fields: [user_owner_id], references: [id], name: "RegisteredAsProfessional")
+  User User @relation(fields: [user_owner_id], references: [id], name: "RegisteredAsProfessional", onDelete: Cascade)
 
   @@unique([user_owner_id])
   @@map("professionals")
