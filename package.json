@@ -2,6 +2,9 @@
   "name": "formatch-web",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,7 +12,8 @@
     "lint": "next lint",
     "db:dev": "pscale connect formatch initial-setup --port 3309",
     "db:push": "prisma db push",
-    "db:erd": "prisma generate"
+    "db:erd": "prisma generate",
+    "db:seed": "prisma db seed"
   },
   "dependencies": {
     "@google-cloud/storage": "^6.8.0",
@@ -35,6 +39,7 @@
     "@types/formidable": "^2.0.5",
     "@types/jsonwebtoken": "^9.0.0",
     "prisma": "^4.8.0",
-    "prisma-erd-generator": "^1.2.4"
+    "prisma-erd-generator": "^1.2.4",
+    "tsx": "^3.12.2"
   }
 }
