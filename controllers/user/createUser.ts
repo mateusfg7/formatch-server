@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { z } from 'zod'
 
 import { prismaClient } from '../../lib/prisma'
-import { jwtSign } from '../../utils/jwt'
+import { signInToken } from '../../lib/auth'
 
 export async function createUser(req: NextApiRequest, res: NextApiResponse) {
   const requestBodySchema = z.object({
@@ -58,7 +58,7 @@ export async function createUser(req: NextApiRequest, res: NextApiResponse) {
     })
   }
 
-  const token = jwtSign({
+  const token = await signInToken({
     name: user.name,
     email: user.email,
     avatar_url: user.avatar_url,
