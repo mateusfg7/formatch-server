@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { z } from 'zod'
 
-import { prismaClient } from '../../lib/prisma'
+import { prismaClient } from '@lib/prisma'
 
 export async function findProfessional(
   req: NextApiRequest,

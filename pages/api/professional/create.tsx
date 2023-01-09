@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Prisma } from '@prisma/client'
 
-import { prismaClient } from '../../../lib/prisma'
+import { prismaClient } from '@lib/prisma'
 
-import { createProfessional } from '../../../controllers/professionals/createProfessional'
+import { createProfessional } from '@controllers/professionals/createProfessional'
 
 export default async function handler(
   req: NextApiRequest,

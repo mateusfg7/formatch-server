@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Prisma } from '@prisma/client'
 
-import { prismaClient } from '../../../lib/prisma'
+import { prismaClient } from '@lib/prisma'
 
-import { createUser } from '../../../controllers/user/createUser'
+import { createUser } from '@controllers/user/createUser'
 
 export default async function handler(
   req: NextApiRequest,

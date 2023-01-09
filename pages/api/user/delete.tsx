@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Prisma } from '@prisma/client'
 
-import { deleteUser } from '../../../controllers/user/deleteUser'
-import { prismaClient } from '../../../lib/prisma'
+import { prismaClient } from '@lib/prisma'
+import { deleteUser } from '@controllers/user/deleteUser'
 
 export default async function handler(
   req: NextApiRequest,

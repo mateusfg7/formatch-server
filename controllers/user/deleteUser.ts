@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { prismaClient } from '../../lib/prisma'
-import { getUserFromCookies } from '../../lib/getUserFromCookies'
+
+import { prismaClient } from '@lib/prisma'
+import { getUserFromCookies } from '@lib/getUserFromCookies'
 
 export async function deleteUser(req: NextApiRequest, res: NextApiResponse) {
   const { email } = getUserFromCookies(req)

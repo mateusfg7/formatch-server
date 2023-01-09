@@ -1,4 +1,4 @@
-import { bucket } from '../lib/gcs'
+import { bucket } from '@lib/gcs'
 
 export async function deleteFileFromGcs(filePathOnGcs: string) {
   const file = bucket.file(filePathOnGcs)

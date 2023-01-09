@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { authUser } from '../../../controllers/user/authUser'
+import { authUser } from '@controllers/user/authUser'
 
 export default async function handler(
   req: NextApiRequest,

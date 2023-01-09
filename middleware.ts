@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 import { JWTPayload } from 'jose'
 import { z } from 'zod'
 
-import { verifyToken } from './lib/auth'
+import { verifyToken } from '@lib/auth'
 
 export async function middleware(req: NextRequest) {
   const authorization = req.headers.get('Authorization')
