@@ -2,5 +2,9 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base"
-  ]
+  ],
+  "commitBodyTable": true,
+  "branchPrefix": "deps/",
+  "bumpVersion": "patch",
+  "labels": ["dependencies"]
 }
