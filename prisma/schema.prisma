@@ -9,10 +9,10 @@ datasource db {
 }
 
 generator erd {
-  provider = "prisma-erd-generator"
-  output   = "./ERD.svg"
-  theme    = "neutral"
-  erdDebug = true
+  provider                  = "prisma-erd-generator"
+  output                    = "./ERD.svg"
+  theme                     = "neutral"
+  includeRelationFromFields = true
 }
 
 model User {
