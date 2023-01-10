@@ -1,6 +1,6 @@
 {
   "name": "formatch-web",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": true,
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -13,7 +13,8 @@
     "db:dev": "pscale connect formatch initial-setup --port 3309",
     "db:push": "prisma db push",
     "db:erd": "prisma generate",
-    "db:seed": "prisma db seed"
+    "db:seed": "prisma db seed",
+    "db:studio": "prisma studio"
   },
   "dependencies": {
     "@google-cloud/storage": "^6.8.0",
