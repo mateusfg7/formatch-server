@@ -101,9 +101,12 @@ export async function createProfessional(
 
       try {
         const fileUrlOnGCS = await uploadFileToGCS(localFilePath, gcsFilePath)
+        const code = generateUid()
+
         const professional = await prismaClient.professional.create({
           data: {
             name,
+            code,
             email,
             phone,
             state_uf,
