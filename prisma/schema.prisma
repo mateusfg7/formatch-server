@@ -25,6 +25,8 @@ model User {
   saved_professionals Professional[]
   owned_professional  Professional?  @relation(name: "RegisteredAsProfessional")
 
+  Rates Rate[]
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -50,7 +52,8 @@ model Professional {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  User User @relation(fields: [user_owner_id], references: [id], name: "RegisteredAsProfessional", onDelete: Cascade)
+  User  User   @relation(fields: [user_owner_id], references: [id], name: "RegisteredAsProfessional", onDelete: Cascade)
+  Rates Rate[]
 
   @@unique([user_owner_id])
   @@map("professionals")
@@ -66,6 +69,24 @@ model Service {
 
   @@unique([service_name])
   @@map("services")
+}
+
+model Rate {
+  id String @id @default(uuid())
+
+  userId         String
+  professionalId String
+  rate_value     Int
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  professional Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([professionalId])
+  @@map("rates")
 }
 
 model AdMeta {
