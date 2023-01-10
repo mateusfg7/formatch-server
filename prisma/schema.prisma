@@ -35,7 +35,8 @@ model User {
 
 model Professional {
   id                       String    @id @default(uuid())
-  user_owner_id            String
+  code                     String    @unique
+  user_owner_id            String    @unique
   profile_picture_url      String
   profile_picture_gcs_path String
   name                     String
@@ -55,7 +56,6 @@ model Professional {
   User  User   @relation(fields: [user_owner_id], references: [id], name: "RegisteredAsProfessional", onDelete: Cascade)
   Rates Rate[]
 
-  @@unique([user_owner_id])
   @@map("professionals")
 }
 
