@@ -2,10 +2,10 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { z } from 'zod'
 import { File } from 'formidable'
 
-import { prismaClient } from '../../lib/prisma'
-import { uploadFileToGCS } from '../../utils/uploadFileToGcs'
-import { form } from '../../utils/form'
-import { generateUid } from '../../utils/uid'
+import { prismaClient } from '@lib/prisma'
+import { uploadFileToGCS } from '@utils/uploadFileToGcs'
+import { form } from '@utils/form'
+import { generateUid } from '@utils/uid'
 
 export async function createProfessional(
   req: NextApiRequest,

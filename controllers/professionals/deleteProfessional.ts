@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { z } from 'zod'
 
-import { prismaClient } from '../../lib/prisma'
-import { deleteFileFromGcs } from '../../utils/deleteFileFromGcs'
+import { prismaClient } from '@lib/prisma'
+import { deleteFileFromGcs } from '@utils/deleteFileFromGcs'
 
 export async function deleteProfessional(
   req: NextApiRequest,

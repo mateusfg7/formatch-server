@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { testDbConnection } from '@lib/testDbConnection'
-import { updateProfessional } from '@controllers/professionals/updateProfessional'
+import { deleteUser } from '@controllers/user/deleteUser'
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,15 +11,9 @@ export default async function handler(
 
   testDbConnection(res)
 
-  if (method === 'PUT') updateProfessional(req, res)
+  if (method === 'DELETE') deleteUser(req, res)
   else {
-    res.setHeader('Allow', ['PUT'])
+    res.setHeader('Allow', ['DELETE'])
     res.status(405).end(`Method ${method} Not Allowed`)
   }
-}
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
 }

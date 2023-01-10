@@ -2,12 +2,12 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { z } from 'zod'
 import { File } from 'formidable'
 
-import { prismaClient } from '../../lib/prisma'
-import { uploadFileToGCS } from '../../utils/uploadFileToGcs'
-import { form } from '../../utils/form'
-import { generateUid } from '../../utils/uid'
+import { prismaClient } from '@lib/prisma'
+import { uploadFileToGCS } from '@utils/uploadFileToGcs'
+import { form } from '@utils/form'
+import { generateUid } from '@utils/uid'
 import { Professional } from '@prisma/client'
-import { deleteFileFromGcs } from '../../utils/deleteFileFromGcs'
+import { deleteFileFromGcs } from '@utils/deleteFileFromGcs'
 
 export async function updateProfessional(
   req: NextApiRequest,

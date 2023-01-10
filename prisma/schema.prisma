@@ -16,19 +16,18 @@ generator erd {
 }
 
 model User {
-  id                       String         @id @default(uuid())
-  name                     String
-  email                    String
-  profile_picture_url      String
-  profile_picture_gcs_path String
-  subscribe                Boolean
-  saved_professional       Professional[]
-  owned_professional       Professional?  @relation(name: "RegisteredAsProfessional")
+  id                  String         @id @default(uuid())
+  name                String
+  email               String         @unique
+  google_id           String         @unique
+  avatar_url          String
+  subscribe           Boolean
+  saved_professionals Professional[]
+  owned_professional  Professional?  @relation(name: "RegisteredAsProfessional")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-  @@unique([email])
   @@map("users")
 }
 
@@ -51,7 +50,7 @@ model Professional {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  User User @relation(fields: [user_owner_id], references: [id], name: "RegisteredAsProfessional")
+  User User @relation(fields: [user_owner_id], references: [id], name: "RegisteredAsProfessional", onDelete: Cascade)
 
   @@unique([user_owner_id])
   @@map("professionals")

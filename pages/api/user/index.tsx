@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { testDbConnection } from '@lib/testDbConnection'
-import { findProfessional } from '@controllers/professionals/findProfessional'
+import { authUser } from '@controllers/user/authUser'
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,9 +8,7 @@ export default async function handler(
 ) {
   const { method } = req
 
-  testDbConnection(res)
-
-  if (method === 'GET') findProfessional(req, res)
+  if (method === 'GET') authUser(req, res)
   else {
     res.setHeader('Allow', ['GET'])
     res.status(405).end(`Method ${method} Not Allowed`)
