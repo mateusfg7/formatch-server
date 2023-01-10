@@ -2,45 +2,59 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { z } from 'zod'
 
 import { prismaClient } from '@lib/prisma'
+import { getUserFromCookies } from '@lib/getUserFromCookies'
 import { deleteFileFromGcs } from '@utils/deleteFileFromGcs'
 
 export async function deleteProfessional(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { body } = req
+  const { code } = req.query
 
-  const professionalDataSchema = z.object({
-    professional_id: z.string(),
-  })
-  const parsedProfessionalData = professionalDataSchema.safeParse(body)
+  const professionalCodeSchema = z.string()
+  const parsedProfessionalCode = professionalCodeSchema.safeParse(code)
 
-  if (!parsedProfessionalData.success)
-    return res.status(400).json({ error: parsedProfessionalData.error.issues })
+  if (!parsedProfessionalCode.success)
+    return res.status(400).json({ error: parsedProfessionalCode.error.issues })
 
-  const { professional_id } = parsedProfessionalData.data
+  const professionalCode = parsedProfessionalCode.data
 
   try {
-    const professional = await prismaClient.professional.findMany({
+    const professional = await prismaClient.professional.findUnique({
       where: {
-        id: professional_id,
+        code: professionalCode,
+      },
+      include: {
+        User: {
+          select: {
+            email: true,
+          },
+        },
       },
     })
 
-    if (professional.length === 0)
+    if (!professional)
       return res.status(404).json({ message: 'Professional not found.' })
 
+    const user = getUserFromCookies(req)
+
+    if (user.email != professional.User.email) {
+      return res.status(401).json({
+        message: 'You do not have permission to delete this professional',
+      })
+    }
+
     const deleteFromGcsResponse = await deleteFileFromGcs(
-      professional[0].profile_picture_gcs_path
+      professional.profile_picture_gcs_path
     )
     if (deleteFromGcsResponse.statusCode !== 204)
       return res
         .status(500)
         .json({ message: 'Error while deleting professional.' })
 
-    await prismaClient.professional.deleteMany({
+    await prismaClient.professional.delete({
       where: {
-        id: professional_id,
+        code: professionalCode,
       },
     })
     res.status(204).end()
