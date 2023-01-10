@@ -10,9 +10,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "yarn run db:generate",
     "db:dev": "pscale connect formatch initial-setup --port 3309",
     "db:push": "prisma db push",
-    "db:erd": "prisma generate",
+    "db:generate": "prisma generate",
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio"
   },
