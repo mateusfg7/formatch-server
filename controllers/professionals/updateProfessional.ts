@@ -22,8 +22,9 @@ export async function updateProfessional(
           .json({ error: err, message: 'Internal server error' })
       }
 
+      const { code } = req.query
+
       const fieldsSchema = z.object({
-        professional_id: z.string(),
         name: z.string().optional(),
         email: z.string().email().optional(),
         phone: z.string().optional(),
@@ -34,13 +35,19 @@ export async function updateProfessional(
         instagram: z.string().optional(),
         services: z.string().optional(),
       })
-      const parsedFields = fieldsSchema.safeParse(rawFields)
+      const codeSchema = z.string()
 
-      if (!parsedFields.success)
+      const parsedFields = fieldsSchema.safeParse(rawFields)
+      const parsedCode = codeSchema.safeParse(code)
+
+      if (!parsedFields.success) {
         return res.status(400).json({ error: parsedFields.error.issues })
+      }
+      if (!parsedCode.success) {
+        return res.status(400).json({ error: parsedCode.error.issues })
+      }
 
       let {
-        professional_id,
         name,
         email,
         phone,
@@ -51,6 +58,8 @@ export async function updateProfessional(
         instagram,
         services,
       } = parsedFields.data
+
+      const professionalCode = parsedCode.data
 
       let parsedService: string[] | undefined
 
@@ -65,7 +74,7 @@ export async function updateProfessional(
       try {
         const professionalOnDB = await prismaClient.professional.findUnique({
           where: {
-            id: professional_id,
+            code: professionalCode,
           },
         })
         if (!professionalOnDB)
@@ -107,7 +116,7 @@ export async function updateProfessional(
         if (parsedService) {
           updatedProfessional = await prismaClient.professional.update({
             where: {
-              id: professional_id,
+              code: professionalCode,
             },
             data: {
               name,
@@ -135,7 +144,7 @@ export async function updateProfessional(
         } else {
           updatedProfessional = await prismaClient.professional.update({
             where: {
-              id: professional_id,
+              code: professionalCode,
             },
             data: {
               name,
