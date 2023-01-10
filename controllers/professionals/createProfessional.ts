@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { File } from 'formidable'
 
 import { prismaClient } from '@lib/prisma'
+import { getUserFromCookies } from '@lib/getUserFromCookies'
 import { uploadFileToGCS } from '@utils/uploadFileToGcs'
 import { form } from '@utils/form'
 import { generateUid } from '@utils/uid'
@@ -21,7 +22,6 @@ export async function createProfessional(
       }
 
       const fieldsSchema = z.object({
-        user_owner_id: z.string(),
         name: z.string(),
         email: z.string().email().optional(),
         phone: z.string().optional(),
@@ -38,7 +38,6 @@ export async function createProfessional(
         return res.status(400).json({ error: parsedFields.error.issues })
 
       const {
-        user_owner_id,
         name,
         email,
         phone,
@@ -68,19 +67,24 @@ export async function createProfessional(
           .json({ message: 'File was not sent or parameter is invalid.' })
       }
 
+      const user = getUserFromCookies(req)
+
       try {
         const registeredProfessional = await prismaClient.professional.findMany(
           {
             where: {
-              user_owner_id,
+              User: {
+                email: user.email,
+              },
             },
           }
         )
 
-        if (registeredProfessional.length > 0)
+        if (registeredProfessional.length > 0) {
           return res
             .status(409)
             .json({ message: 'User already registered as a professional.' })
+        }
       } catch (err) {
         console.error(err)
         return res
@@ -111,7 +115,7 @@ export async function createProfessional(
             profile_picture_gcs_path: gcsFilePath,
             User: {
               connect: {
-                id: user_owner_id,
+                email: user.email,
               },
             },
             services: {
