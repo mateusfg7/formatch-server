@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { prismaClient } from '@lib/prisma'
-import { getUserFromCookies } from '@lib/getUserFromCookies'
+import { getUserFromHeader } from '@lib/getUserFromHeader'
 
 export async function deleteUser(req: NextApiRequest, res: NextApiResponse) {
-  const { email } = getUserFromCookies(req)
+  const { email } = getUserFromHeader(req)
 
   try {
     const user = await prismaClient.user.findMany({

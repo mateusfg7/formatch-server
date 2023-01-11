@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getUserFromCookies } from '@lib/getUserFromCookies'
+
+import { getUserFromHeader } from '@lib/getUserFromHeader'
 
 export async function authUser(req: NextApiRequest, res: NextApiResponse) {
-  const user = getUserFromCookies(req)
+  const user = getUserFromHeader(req)
 
   return res.status(200).json(user)
 }
