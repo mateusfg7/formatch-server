@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { testDbConnection } from '@lib/testDbConnection'
-import { savedProfessionalByUser } from '@controllers/user/savedProfessionalsByUser'
+import { togglePremiumSubscribe } from '@controllers/user/togglePremiumSubscribe'
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,11 +9,11 @@ export default async function handler(
 ) {
   const { method } = req
 
-  testDbConnection(res)
+  await testDbConnection(res)
 
-  if (method === 'GET') savedProfessionalByUser(req, res)
+  if (method === 'PUT') togglePremiumSubscribe(req, res)
   else {
-    res.setHeader('Allow', ['GET'])
+    res.setHeader('Allow', ['PUT'])
     res.status(405).end(`Method ${method} Not Allowed`)
   }
 }

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { testDbConnection } from '@lib/testDbConnection'
-import { findProfessional } from '@controllers/professionals/findProfessional'
+import { updateProfessional } from '@controllers/professionals/updateProfessional'
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,11 +9,17 @@ export default async function handler(
 ) {
   const { method } = req
 
-  testDbConnection(res)
+  await testDbConnection(res)
 
-  if (method === 'GET') findProfessional(req, res)
+  if (method === 'PUT') updateProfessional(req, res)
   else {
-    res.setHeader('Allow', ['GET'])
+    res.setHeader('Allow', ['PUT'])
     res.status(405).end(`Method ${method} Not Allowed`)
   }
+}
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
 }

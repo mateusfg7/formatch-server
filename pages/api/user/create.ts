@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { testDbConnection } from '@lib/testDbConnection'
-import { deleteProfessional } from '@controllers/professionals/deleteProfessional'
+import { createUser } from '@controllers/user/createUser'
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,11 +9,11 @@ export default async function handler(
 ) {
   const { method } = req
 
-  testDbConnection(res)
+  await testDbConnection(res)
 
-  if (method === 'DELETE') deleteProfessional(req, res)
+  if (method === 'POST') createUser(req, res)
   else {
-    res.setHeader('Allow', ['DELETE'])
+    res.setHeader('Allow', ['POST'])
     res.status(405).end(`Method ${method} Not Allowed`)
   }
 }

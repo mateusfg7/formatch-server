@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { testDbConnection } from '@lib/testDbConnection'
-import { deleteUser } from '@controllers/user/deleteUser'
+import { deleteProfessional } from '@controllers/professionals/deleteProfessional'
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,9 +9,9 @@ export default async function handler(
 ) {
   const { method } = req
 
-  testDbConnection(res)
+  await testDbConnection(res)
 
-  if (method === 'DELETE') deleteUser(req, res)
+  if (method === 'DELETE') deleteProfessional(req, res)
   else {
     res.setHeader('Allow', ['DELETE'])
     res.status(405).end(`Method ${method} Not Allowed`)
