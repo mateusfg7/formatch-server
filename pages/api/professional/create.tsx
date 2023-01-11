@@ -9,7 +9,7 @@ export default async function handler(
 ) {
   const { method } = req
 
-  testDbConnection(res)
+  await testDbConnection(res)
 
   if (method === 'POST') createProfessional(req, res)
   else {
