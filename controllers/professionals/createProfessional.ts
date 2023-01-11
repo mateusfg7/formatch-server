@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { File } from 'formidable'
 
 import { prismaClient } from '@lib/prisma'
-import { getUserFromCookies } from '@lib/getUserFromCookies'
+import { getUserFromHeader } from '@lib/getUserFromHeader'
 import { uploadFileToGCS } from '@utils/uploadFileToGcs'
 import { form } from '@utils/form'
 import { generateUid } from '@utils/uid'
@@ -67,7 +67,7 @@ export async function createProfessional(
           .json({ message: 'File was not sent or parameter is invalid.' })
       }
 
-      const user = getUserFromCookies(req)
+      const user = getUserFromHeader(req)
 
       try {
         const registeredProfessional = await prismaClient.professional.findMany(

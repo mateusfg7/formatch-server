@@ -44,11 +44,15 @@ export async function middleware(req: NextRequest) {
     )
   }
 
-  const response = NextResponse.next()
+  const requestHeaders = new Headers(req.headers)
 
-  response.cookies.set('user', JSON.stringify(parsedUser.data))
+  requestHeaders.append('user-data', JSON.stringify(parsedUser.data))
 
-  return response
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  })
 }
 
 export const config = {

@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { z } from 'zod'
 
 import { prismaClient } from '@lib/prisma'
-import { getUserFromCookies } from '@lib/getUserFromCookies'
+import { getUserFromHeader } from '@lib/getUserFromHeader'
 import { deleteFileFromGcs } from '@utils/deleteFileFromGcs'
 
 export async function deleteProfessional(
@@ -36,7 +36,7 @@ export async function deleteProfessional(
     if (!professional)
       return res.status(404).json({ message: 'Professional not found.' })
 
-    const user = getUserFromCookies(req)
+    const user = getUserFromHeader(req)
 
     if (user.email != professional.User.email) {
       return res.status(401).json({

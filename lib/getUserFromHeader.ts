@@ -1,14 +1,14 @@
 import { NextApiRequest } from 'next'
 import { z } from 'zod'
 
-export function getUserFromCookies(request: NextApiRequest) {
-  const { cookies } = request
+export function getUserFromHeader(request: NextApiRequest) {
+  const { headers } = request
 
-  let { user } = cookies
+  let { 'user-data': user } = headers
 
   if (!user) throw Error('Cannot get user.')
 
-  user = JSON.parse(user)
+  user = JSON.parse(user as string)
 
   const userScheme = z.object({
     name: z.string(),

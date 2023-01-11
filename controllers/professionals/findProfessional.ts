@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { z } from 'zod'
 
 import { prismaClient } from '@lib/prisma'
-import { getUserFromCookies } from '@lib/getUserFromCookies'
+import { getUserFromHeader } from '@lib/getUserFromHeader'
 import { getArrayAverage } from '@utils/arrayAverage'
 
 export async function findProfessional(
@@ -51,7 +51,7 @@ export async function findProfessional(
       return res.status(404).json({ message: 'Professional not found.' })
     }
 
-    const user = getUserFromCookies(req)
+    const user = getUserFromHeader(req)
 
     const isSaved = professional.saved_users.includes({ email: user.email })
 

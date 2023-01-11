@@ -1,4 +1,4 @@
-import { getUserFromCookies } from '@lib/getUserFromCookies'
+import { getUserFromHeader } from '@lib/getUserFromHeader'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { prismaClient } from '@lib/prisma'
 
@@ -6,7 +6,7 @@ export async function togglePremiumSubscribe(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { email } = getUserFromCookies(req)
+  const { email } = getUserFromHeader(req)
 
   let userSubscription: { subscribe: boolean } | null
 

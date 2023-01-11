@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { getUserFromCookies } from '@lib/getUserFromCookies'
+import { getUserFromHeader } from '@lib/getUserFromHeader'
 import { prismaClient } from '@lib/prisma'
 
 export async function savedProfessionalByUser(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { email } = getUserFromCookies(req)
+  const { email } = getUserFromHeader(req)
 
   try {
     const savedProfessionals = await prismaClient.user.findUnique({
