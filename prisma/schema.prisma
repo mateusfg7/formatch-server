@@ -91,7 +91,7 @@ model Rate {
 
 model AdMeta {
   id          String    @id @default(uuid())
-  name        String
+  name        String    @unique
   logo_url    String
   website_url String
   articles    Article[]
@@ -104,10 +104,10 @@ model AdMeta {
 
 model Article {
   id         String  @id @default(uuid())
-  slug       String
+  slug       String  @unique
   title      String
   banner_url String?
-  content    String
+  content    String  @db.MediumText
   adMetaId   String?
 
   createdAt DateTime @default(now())
