@@ -43,23 +43,33 @@ export async function createArticle(req: NextApiRequest, res: NextApiResponse) {
       slug,
     }
 
-    if (!ad_meta) article = await prismaClient.article.create({ data })
-    else {
-      const { name, logo_url, website_url } = ad_meta
-      article = await prismaClient.article.create({
-        data: {
-          ...data,
-          AdMeta: {
-            connectOrCreate: {
-              where: { name },
-              create: { name, logo_url, website_url },
+    const existingArticle = await prismaClient.article.findUnique({
+      where: {
+        slug,
+      },
+    })
+
+    if (!existingArticle) {
+      if (!ad_meta) article = await prismaClient.article.create({ data })
+      else {
+        const { name, logo_url, website_url } = ad_meta
+        article = await prismaClient.article.create({
+          data: {
+            ...data,
+            AdMeta: {
+              connectOrCreate: {
+                where: { name },
+                create: { name, logo_url, website_url },
+              },
             },
           },
-        },
-        include: {
-          AdMeta: true,
-        },
-      })
+          include: {
+            AdMeta: true,
+          },
+        })
+      }
+    } else {
+      return res.status(409).json({ message: 'Article title already used.' })
     }
   } catch (error) {
     console.log(error)
