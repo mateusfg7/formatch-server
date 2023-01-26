@@ -1,0 +1,18 @@
+{
+  "slug": "as-vantagens-do-biogas",
+  "title": "As vantagens do Biogas",
+  "banner_url": "https://www.bioenergy-news.com/wp-content/uploads/2019/09/Biogas-plant-small.jpg",
+  "content": "Porque não reutilizar o que descartamos na geração de energia? É isso que acontece com o biogás, um biocombustível feito a partir da transformação de materiais orgânicos, sendo utilizado como uma fonte alternativa de energia e que pode substituir os combustíveis fósseis.\nMais ecológico que fontes não renováveis, como o petróleo, o biogás é gerado a partir de resíduos orgânicos de origem animal, vegetal ou industrial. Ao tratar matéria orgânica para produção de energia, evita-se que seja expelido o gás metano na atmosfera, muito mais nocivo que o CO2.\nO biocombustível é a solução ideal para a produção descentralizada de energia em setores como o agronegócio, capturando a energia gerada a partir de, por exemplo, esterco espalhado em torno das terras agrícolas. A indústria de alimentos também pode fazer uso desta solução, convertendo os resíduos de seu processo produtivo em lodo biológico e, a partir de sua queima, gerar energia para a planta industrial.\nA utilização deste serviço apresenta inúmeras vantagens:\n- Ajuda a gerar energia elétrica e pode ser utilizado em propriedades rurais;\n- Redução de custos ao gerar energia a partir de recursos próprios;\n- Fonte de energia limpa e renovável;\n- Promove a criação de produtos como fertilizantes;\n- Uma solução que dá nova utilidade a aterros sanitários, ao propor a transformação do lixo orgânico em energia;\n- Alternativa ao GLP e ao gás de cozinha, pois não deixa resíduos, como fuligem, nas panelas.\nO investimento em biogás, além de beneficiar o meio ambiente, é um fator positivo para a reputação das empresas que adotam modelos sustentáveis de geração de energia e gestão de resíduos.",
+  "AdMeta": {
+    "connectOrCreate": {
+      "where": {
+        "name": "EIMA Soluções Elétricas"
+      },
+      "create": {
+        "logo_url": "https://cdn.awsli.com.br/2126/2126528/logo/3ada6639b1.png",
+        "name": "EIMA Soluções Elétricas",
+        "website_url": "https://eima.com.br"
+      }
+    }
+  }
+}
