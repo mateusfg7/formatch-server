@@ -130,11 +130,29 @@ export async function createProfessional(
             },
           },
           include: {
-            services: true,
+            services: {
+              select: {
+                service_name: true,
+              },
+            },
           },
         })
 
-        return res.status(201).json({ professional })
+        const {
+          id,
+          user_owner_id,
+          profile_picture_gcs_path,
+          updatedAt,
+          services: serviceList,
+          ...rest
+        } = professional
+
+        return res.status(201).json({
+          ...rest,
+          savedCount: 0,
+          averageRate: 0,
+          services: serviceList.map((service) => service.service_name),
+        })
       } catch (err) {
         console.error(err)
         return res
@@ -146,4 +164,20 @@ export async function createProfessional(
     console.error(e)
     return res.status(500).json({ error: e, message: 'Internal server error' })
   }
+}
+
+interface AuthenticatedProfessionalData {
+  name: string
+  code: string
+  profile_picture_url: string
+  state_uf: string
+  city: string
+  biography: string
+  services: string[]
+  savedCount: number
+  averageRate: number
+  email: string | null
+  phone: string | null
+  whatsapp: string | null
+  instagram: string | null
 }
