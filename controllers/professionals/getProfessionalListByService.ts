@@ -8,27 +8,26 @@ export async function getProfessionalListByService(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { body } = req
+  const { query } = req
 
-  const bodySchema = z.object({
+  const querySchema = z.object({
     service: z.string(),
-    filter: z
-      .object({
-        uf: z.string().length(2),
-        city: z.string(),
-      })
-      .optional(),
+    uf: z.string().length(2).optional(),
+    city: z.string().optional(),
   })
 
-  const parsedBody = bodySchema.safeParse(body)
+  const parsedQuery = querySchema.safeParse(query)
 
-  if (!parsedBody.success) {
+  if (!parsedQuery.success) {
     return res
       .status(400)
-      .send({ message: 'Invalid body params', error: parsedBody.error.issues })
+      .send({
+        message: 'Invalid query params',
+        error: parsedQuery.error.issues,
+      })
   }
 
-  const { service, filter } = parsedBody.data
+  const { service, uf, city } = parsedQuery.data
 
   try {
     const professionalListOnDb = await prismaClient.professional.findMany({
@@ -38,10 +37,11 @@ export async function getProfessionalListByService(
             service_name: service,
           },
         },
-        ...(filter && {
-          city: filter.city,
-          state_uf: filter.uf.toUpperCase(),
-        }),
+        ...(city &&
+          uf && {
+            city: city,
+            state_uf: uf.toUpperCase(),
+          }),
       },
       include: {
         services: {
@@ -92,8 +92,6 @@ export async function getProfessionalListByService(
 
     return res.status(200).send({
       professional_list: filteredProfessionalList,
-      service,
-      ...(filter && filter),
     })
   } catch (error) {
     console.log(error)
