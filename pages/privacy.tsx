@@ -1,7 +1,8 @@
+/* eslint-disable react/no-unescaped-entities */
 export default function PrivacyPolice() {
   return (
-    <div className="p-14">
-      <div className="max-w-3xl mx-auto p-5 shadow-2xl ">
+    <div className='p-14'>
+      <div className='max-w-3xl mx-auto p-5 shadow-2xl '>
         <h1>Privacy Policy</h1>
         <p>Last updated: February 03, 2023</p>
         <p>
@@ -14,11 +15,11 @@ export default function PrivacyPolice() {
           We use Your Personal data to provide and improve the Service. By using
           the Service, You agree to the collection and use of information in
           accordance with this Privacy Policy. This Privacy Policy has been
-          created with the help of the{" "}
+          created with the help of the{' '}
           <a
-            href="https://www.privacypolicies.com/privacy-policy-generator/"
-            target="_blank"
-            rel="noreferrer"
+            href='https://www.privacypolicies.com/privacy-policy-generator/'
+            target='_blank'
+            rel='noreferrer'
           >
             Privacy Policy Generator
           </a>
@@ -476,5 +477,5 @@ export default function PrivacyPolice() {
         </ul>
       </div>
     </div>
-  );
+  )
 }
