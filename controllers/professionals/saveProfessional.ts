@@ -41,7 +41,10 @@ export async function saveProfessional(
       return res.status(404).json({ message: 'Professional not found' })
     }
 
-    const isProfessionalSaved = professional.saved_users.includes({ email })
+    const emailList = professional.saved_users.map(
+      (emailData) => emailData.email
+    )
+    const isProfessionalSaved = emailList.includes(email)
 
     if (isProfessionalSaved) {
       await prismaClient.user.update({

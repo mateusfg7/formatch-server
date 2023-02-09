@@ -53,7 +53,10 @@ export async function findProfessional(
 
     const user = getUserFromHeader(req)
 
-    const isSaved = professional.saved_users.includes({ email: user.email })
+    const emailList = professional.saved_users.map(
+      (emailData) => emailData.email
+    )
+    const isSaved = emailList.includes(user.email)
 
     const ratedByUser = professional.Rates.find(
       (rate) => rate.user.email === user.email
