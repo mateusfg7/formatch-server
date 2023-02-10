@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { testDbConnection } from '@lib/testDbConnection'
 import { deleteUser } from '@controllers/user/deleteUser'
 
 export default async function handler(
@@ -8,8 +7,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { method } = req
-
-  await testDbConnection(res)
 
   if (method === 'DELETE') deleteUser(req, res)
   else {

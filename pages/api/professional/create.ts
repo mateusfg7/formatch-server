@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { testDbConnection } from '@lib/testDbConnection'
 import { createProfessional } from '@controllers/professionals/createProfessional'
 
 export default async function handler(
@@ -8,8 +7,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { method } = req
-
-  await testDbConnection(res)
 
   if (method === 'POST') createProfessional(req, res)
   else {
