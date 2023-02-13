@@ -61,7 +61,7 @@ export async function findProfessional(
     const ratedByUser = professional.Rates.find(
       (rate) => rate.user.email === user.email
     )
-    const isRated = ratedByUser != undefined ? true : false
+    const currentRate = ratedByUser && ratedByUser.rate_value
 
     const ratings = professional.Rates.map((rate) => rate.rate_value)
     const averageRate = getArrayAverage(ratings)
@@ -81,7 +81,7 @@ export async function findProfessional(
     return res.status(200).json({
       ...rest,
       isSaved,
-      isRated,
+      currentRate,
       averageRate,
       services: services.map((service) => service.service_name),
     })
