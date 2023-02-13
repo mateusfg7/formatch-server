@@ -45,7 +45,7 @@ model Professional {
   state_uf                 String
   city                     String
   services                 Service[]
-  biography                String
+  biography                String    @db.VarChar(1000)
   whatsapp                 String?
   instagram                String?
   saved_users              User[]
