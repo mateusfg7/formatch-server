@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 import { prismaClient } from '@lib/prisma'
 import { getUserFromHeader } from '@lib/getUserFromHeader'
+import { Rate } from '@prisma/client'
 
 export async function createRate(req: NextApiRequest, res: NextApiResponse) {
   const { rate } = req.body
@@ -38,11 +39,14 @@ export async function createRate(req: NextApiRequest, res: NextApiResponse) {
       },
     })
 
-    if (existingRate.length > 0)
-      return res.status(401).json({ message: 'Professional already rated' })
-
-    const registeredRate = await prismaClient.rate.create({
-      data: {
+    const registeredRate = await prismaClient.rate.upsert({
+      where: {
+        id: existingRate[0].id ?? '',
+      },
+      update: {
+        rate_value: parsedRate.data,
+      },
+      create: {
         user: {
           connect: {
             email,
