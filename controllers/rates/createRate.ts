@@ -33,7 +33,17 @@ export async function createRate(req: NextApiRequest, res: NextApiResponse) {
   const { email } = getUserFromHeader(req)
 
   try {
-    const existingRate = await prismaClient.rate.findMany({
+    const checkProfessional = await prismaClient.professional.findMany({
+      where: {
+        code: parsedCode.data,
+      },
+    })
+
+    if (checkProfessional.length === 0) {
+      return res.status(400).json({ message: 'Professional not found' })
+    }
+
+    const existingRate = await prismaClient.rate.findFirst({
       where: {
         AND: [{ user: { email } }, { professional: { code: parsedCode.data } }],
       },
@@ -41,7 +51,7 @@ export async function createRate(req: NextApiRequest, res: NextApiResponse) {
 
     const registeredRate = await prismaClient.rate.upsert({
       where: {
-        id: existingRate[0].id ?? '',
+        id: existingRate?.id ?? '',
       },
       update: {
         rate_value: parsedRate.data,
