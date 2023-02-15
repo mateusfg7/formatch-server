@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { listArticles } from '@controllers/articles/listArticles'
+import { listArticles } from 'use-case/articles/listArticles'
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,8 +8,16 @@ export default async function handler(
 ) {
   const { method } = req
 
-  if (method === 'GET') listArticles(req, res)
-  else {
+  if (method === 'GET') {
+    try {
+      const articles = await listArticles()
+
+      return res.status(200).json(articles)
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json({ message: 'Internal server error' })
+    }
+  } else {
     res.setHeader('Allow', ['GET'])
     res.status(405).end(`Method ${method} Not Allowed`)
   }
