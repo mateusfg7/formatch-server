@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .markdown-content {
+    @apply text-lg;
+  }
+
+  .markdown-content p {
+    @apply my-4;
+  }
+
+  .markdown-content ul {
+    @apply list-disc list-inside;
+  }
+
+  .markdown-content ul li ul {
+    @apply px-6;
+  }
+}
+
+@layer utilities {
+  .px-content {
+    @apply px-44;
+  }
+}
