@@ -1,9 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { z } from 'zod'
 
-import { prismaClient } from '@lib/prisma'
+import { getArticle } from 'use-case/articles/getArticle'
 
-export async function getArticle(req: NextApiRequest, res: NextApiResponse) {
+export async function getArticleController(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { slug: slugQuery } = req.query
 
   const slugSchema = z.string()
@@ -16,16 +19,12 @@ export async function getArticle(req: NextApiRequest, res: NextApiResponse) {
   }
 
   const slug = parsedSlug.data
-  console.log(slug)
 
   try {
-    const article = await prismaClient.article.findUnique({
-      where: { slug },
-      include: { AdMeta: true },
-    })
+    const article = await getArticle(slug)
 
     if (!article) {
-      return res.status(4004).json({ message: 'Article not found' })
+      return res.status(404).json({ message: 'Article not found' })
     }
 
     return res.status(200).json(article)
