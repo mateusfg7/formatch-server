@@ -11,15 +11,16 @@ export async function createArticle(req: NextApiRequest, res: NextApiResponse) {
     title: z.string(),
     banner_url: z.string().url(),
     content: z.string(),
-    ad_meta: z
-      .object({
-        name: z.string(),
-        logo_url: z.string().url(),
-        website_url: z.string().url(),
-      })
-      .optional(),
+    ad_name: z.string().optional(),
+    // ad_meta: z
+    //   .object({
+    //     name: z.string(),
+    //     logo_url: z.string().url(),
+    //     website_url: z.string().url(),
+    //   })
+    //   .optional(),
   })
-  const parsedArticle = articleSchema.safeParse(body)
+  const parsedArticle = articleSchema.safeParse(JSON.parse(body))
 
   if (!parsedArticle.success)
     return res.status(400).json({
@@ -27,7 +28,7 @@ export async function createArticle(req: NextApiRequest, res: NextApiResponse) {
       error: parsedArticle.error.issues,
     })
 
-  const { title, banner_url, content, ad_meta } = parsedArticle.data
+  const { title, banner_url, content, ad_name } = parsedArticle.data
   const slug = title
     .toLowerCase()
     .normalize('NFD')
@@ -50,24 +51,21 @@ export async function createArticle(req: NextApiRequest, res: NextApiResponse) {
     })
 
     if (!existingArticle) {
-      if (!ad_meta) article = await prismaClient.article.create({ data })
-      else {
-        const { name, logo_url, website_url } = ad_meta
-        article = await prismaClient.article.create({
-          data: {
-            ...data,
+      article = await prismaClient.article.create({
+        data: {
+          ...data,
+          ...(ad_name && {
             AdMeta: {
-              connectOrCreate: {
-                where: { name },
-                create: { name, logo_url, website_url },
+              connect: {
+                name: ad_name,
               },
             },
-          },
-          include: {
-            AdMeta: true,
-          },
-        })
-      }
+          }),
+        },
+        include: {
+          AdMeta: true,
+        },
+      })
     } else {
       return res.status(409).json({ message: 'Article title already used.' })
     }
