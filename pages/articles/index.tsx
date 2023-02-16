@@ -98,7 +98,7 @@ export default function Page() {
               className='flex border-b border-black/10 last:border-none'
             >
               <Link
-                href={`/articles/${article.slug}`}
+                href={`/articles/${encodeURI(article.slug)}`}
                 target='_blank'
                 className='flex-1 py-5 group'
               >
