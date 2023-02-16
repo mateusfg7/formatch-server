@@ -6,7 +6,7 @@ export function formatDate(date: Date) {
   const month = format(date, 'MMMM', { locale: ptBR })
   const day = format(date, 'dd', { locale: ptBR })
   const hour = format(date, 'H', { locale: ptBR })
-  const minutes = format(date, 'm', { locale: ptBR })
+  const minutes = format(date, 'mm', { locale: ptBR })
 
   return `${day} de ${month} de ${year}, às ${hour}:${minutes}`
 }
