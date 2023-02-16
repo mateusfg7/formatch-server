@@ -18,6 +18,10 @@
   .markdown-content ul li ul {
     @apply px-6;
   }
+
+  .markdown-content a {
+    @apply text-blue-700 hover:underline;
+  }
 }
 
 @layer utilities {
