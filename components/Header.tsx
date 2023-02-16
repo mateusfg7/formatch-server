@@ -1,7 +1,6 @@
-'use client'
-
 import Image from 'next/image'
 import Link from 'next/link'
+
 import { usePathname } from 'next/navigation'
 
 export function Header() {
@@ -27,10 +26,10 @@ export function Header() {
         </div>
         <div
           className={`text-xl ${
-            pathname?.startsWith('/professionals') && 'font-bold'
+            pathname?.startsWith('/advertisers') && 'font-bold'
           }`}
         >
-          <Link href='/professionals'>Professionals</Link>
+          <Link href='/advertisers'>Advertisers</Link>
         </div>
       </nav>
     </header>
