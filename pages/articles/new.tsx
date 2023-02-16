@@ -40,7 +40,7 @@ export default function Page() {
         }
 
         const article = await response.json()
-        router.push(`/articles/${article.slug}`)
+        router.push(`/articles/${encodeURI(article.slug)}`)
       })
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false))
