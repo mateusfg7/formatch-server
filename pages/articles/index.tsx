@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Article, FilePlus, Pen, Trash } from 'phosphor-react'
+import { Article, FilePlus, Pen, SmileySad, Trash } from 'phosphor-react'
 
 import { formatDate } from 'utils/formatDate'
 import { Header } from 'components/Header'
@@ -35,37 +35,37 @@ export default function Page() {
   }, [])
 
   async function deleteArticle(slug: string) {
-    const articleListBackup = articles
-    setArticles(articles.filter((article) => article.slug != slug))
+    const articleListBackup = articles;
+    setArticles(articles.filter((article) => article.slug != slug));
     await fetch(`/api/article/${slug}`, {
-      method: 'DELETE',
+      method: "DELETE",
     })
       .then((response) => {
         if (response.status !== 204) {
-          setArticles(articleListBackup)
+          setArticles(articleListBackup);
           console.error(
             `Error while deleting article:\n\n${response.status} ${response.statusText}`
-          )
-          return
+          );
+          return;
         }
         console.log(
           `Article deleted successfully with status code ${response.status}`
-        )
+        );
       })
       .catch((error) => {
-        setArticles(articleListBackup)
-        console.error(error)
-      })
+        setArticles(articleListBackup);
+        console.error(error);
+      });
   }
 
   const Skeleton = () => (
-    <div className='flex animate-pulse'>
-      <div className='flex-1 py-5 group'>
-        <div className='bg-neutral-200 h-6 w-36 mb-1' />
-        <div className='bg-neutral-200 h-6 w-56' />
+    <div className="flex animate-pulse">
+      <div className="flex-1 py-5 group">
+        <div className="bg-neutral-200 h-6 w-36 mb-1" />
+        <div className="bg-neutral-200 h-6 w-56" />
       </div>
-      <div className='flex items-center justify-center'>
-        <div className='w-8 h-8 bg-neutral-200' />
+      <div className="flex items-center justify-center">
+        <div className="w-8 h-8 bg-neutral-200" />
       </div>
     </div>
   )
@@ -91,7 +91,7 @@ export default function Page() {
             <Skeleton />
             <Skeleton />
           </>
-        ) : (
+        ) : articles.length > 0 ? (
           articles.map((article) => (
             <div
               key={article.slug}
@@ -121,8 +121,13 @@ export default function Page() {
               </div>
             </div>
           ))
+        ) : (
+          <div className='p-20 flex items-center justify-center gap-6 text-xl text-neutral-500'>
+            <span>Nenhum artigo encontrado</span>
+            <SmileySad />
+          </div>
         )}
       </Container>
     </div>
-  )
+  );
 }
