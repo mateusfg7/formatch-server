@@ -49,13 +49,13 @@ vscode:
 
 
 tasks:
-  - name: Install Packages
-    command: yarn install
   - name: Init Planetscale DB Proxy
+    init: yarn install
     command: yarn db:dev
   - name: Start Dev Server
     env:
       DATABASE_URL: mysql://root@127.0.0.1:3309/formatch?connect_timeout=60&connection_limit=100&pool_timeout=60
+    init: yarn install
     command: yarn dev
     openMode: tab-after
 
