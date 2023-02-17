@@ -12,16 +12,15 @@ export default function Page() {
   const [advertises, setAdvertises] = useState<AdMeta[]>([] as AdMeta[])
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    async function fetchAdvertisers() {
-      const data: AdMeta[] = await fetch(`/api/advertisers/list`).then(
-        (response) => response.json()
-      )
+  async function fetchAdvertisers() {
+    await fetch(`/api/advertisers/list`)
+      .then((response) => response.json())
+      .then((data) => setAdvertises(data))
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false))
+  }
 
-      setAdvertises(data)
-      console.table(data)
-      setIsLoading(false)
-    }
+  useEffect(() => {
     fetchAdvertisers()
   }, [])
 
