@@ -15,7 +15,8 @@
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
     "db:seed": "prisma db seed",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "gp:browser": "/usr/bin/gp preview $(gp url 3000) --external"
   },
   "dependencies": {
     "@google-cloud/storage": "^6.8.0",
