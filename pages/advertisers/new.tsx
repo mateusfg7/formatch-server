@@ -32,8 +32,6 @@ export default function Page() {
           console.error(`${response.status} ${response.statusText}`)
           return
         }
-
-        const article = await response.json()
         router.push(`/advertisers`)
       })
       .catch((error) => console.log(error))
