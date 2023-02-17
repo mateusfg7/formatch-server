@@ -26,6 +26,6 @@
 
 @layer utilities {
   .px-content {
-    @apply px-44;
+    @apply px-56;
   }
 }
