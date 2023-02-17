@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { SmileySad, Trash } from 'phosphor-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { AdMeta } from '@prisma/client'
+import { SmileySad, Storefront, Trash } from 'phosphor-react'
 
 import { formatDate } from 'utils/formatDate'
 import { Header } from 'components/Header'
 import { Container } from 'components/Container'
-import { AdMeta } from '@prisma/client'
-import Image from 'next/image'
 
 export default function Page() {
   const [advertises, setAdvertises] = useState<AdMeta[]>([] as AdMeta[])
@@ -64,6 +65,15 @@ export default function Page() {
     <div>
       <Header />
       <Container>
+      <div className='flex justify-end mb-3'>
+          <Link
+            href='/advertisers/new'
+            className='flex items-center justify-center gap-2 p-3 rounded-xl transition text-neutral-800 bg-neutral-100 hover:bg-blue-100 hover:text-blue-800 hover:cursor-pointer'
+          >
+            <span>Novo</span>
+            <Storefront className='text-xl' weight='duotone' />
+          </Link>
+        </div>
         {isLoading ? (
           <>
             <Skeleton />
@@ -75,7 +85,7 @@ export default function Page() {
         ) : advertises.length > 0 ? advertises.map((ad) => (
             <div
               key={ad.id}
-              className='flex border-t border-black/10 first:border-none'
+              className='flex border-b border-black/10 last:border-none'
             >
               <div className='flex-1 py-5 flex gap-7'>
                 <div className='relative flex items-center justify-center w-28 rounded-xl overflow-hidden p-3 bg-black/40'>
