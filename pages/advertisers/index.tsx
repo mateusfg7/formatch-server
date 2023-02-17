@@ -17,7 +17,7 @@ export default function Page() {
       const data: AdMeta[] = await fetch(`/api/advertisers/list`).then(
         (response) => response.json()
       )
-      
+
       setAdvertises(data)
       console.table(data)
       setIsLoading(false)
@@ -65,7 +65,7 @@ export default function Page() {
     <div>
       <Header />
       <Container>
-      <div className='flex justify-end mb-3'>
+        <div className='flex justify-end mb-3'>
           <Link
             href='/advertisers/new'
             className='flex items-center justify-center gap-2 p-3 rounded-xl transition text-neutral-800 bg-neutral-100 hover:bg-blue-100 hover:text-blue-800 hover:cursor-pointer'
@@ -82,18 +82,24 @@ export default function Page() {
             <Skeleton />
             <Skeleton />
           </>
-        ) : advertises.length > 0 ? advertises.map((ad) => (
+        ) : advertises.length > 0 ? (
+          advertises.map((ad) => (
             <div
               key={ad.id}
-              className='flex border-b border-black/10 last:border-none'
+              className='flex border-b border-black/10 last:border-none group'
             >
-              <div className='flex-1 py-5 flex gap-7'>
-                <div className='relative flex items-center justify-center w-28 rounded-xl overflow-hidden p-3 bg-black/40'>
-                  <div className='relative w-full h-full flex items-center justify-center'>
-                    <Image src={ad.logo_url} alt='pic' fill />
+              <div className='flex-1 py-1 flex gap-7 group-hover:cursor-pointer'>
+                <div className='relative flex items-center justify-center w-[14%] rounded-xl overflow-hidden p-2 transition duration-500 bg-neutral-300 group-hover:bg-neutral-400 border border-neutral-500'>
+                  <div className='relative w-full h-full'>
+                    <Image
+                      src={ad.logo_url}
+                      alt='Error'
+                      className='object-contain flex items-center justify-center'
+                      fill
+                    />
                   </div>
                 </div>
-                <div>
+                <div className='py-5'>
                   <div>
                     <h1 className='text-xl text-neutral-900'>{ad.name}</h1>
                   </div>
@@ -111,13 +117,13 @@ export default function Page() {
                 </button>
               </div> */}
             </div>
-          )
-        ): (
+          ))
+        ) : (
           <div className='p-20 flex items-center justify-center gap-6 text-xl text-neutral-500'>
-          <span>Nenhum anunciante encontrado</span>
-          <SmileySad />
-        </div>
-        ) }
+            <span>Nenhum anunciante encontrado</span>
+            <SmileySad />
+          </div>
+        )}
       </Container>
     </div>
   )

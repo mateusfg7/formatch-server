@@ -23,7 +23,7 @@ export default function Page() {
       website,
     }
 
-    await fetch('/api/advertiser/create', {
+    await fetch('/api/advertisers/create', {
       method: 'POST',
       body: JSON.stringify(data),
     })
