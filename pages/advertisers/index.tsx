@@ -7,19 +7,6 @@ import { Container } from 'components/Container'
 import { AdMeta } from '@prisma/client'
 import Image from 'next/image'
 
-interface ArticleData {
-  title: string
-  slug: string
-  banner_url: string
-  content: string
-  createdAt: string
-  AdMeta?: {
-    name: string
-    logo_url: string
-    website_url: string
-  }
-}
-
 export default function Page() {
   const [advertises, setAdvertises] = useState<AdMeta[]>([] as AdMeta[])
   const [isLoading, setIsLoading] = useState(true)
@@ -29,8 +16,8 @@ export default function Page() {
       const data: AdMeta[] = await fetch(`/api/advertisers/list`).then(
         (response) => response.json()
       )
-      // setAdvertises(data)
-      setAdvertises([])
+      
+      setAdvertises(data)
       console.table(data)
       setIsLoading(false)
     }
