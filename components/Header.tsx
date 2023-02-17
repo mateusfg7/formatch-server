@@ -14,23 +14,30 @@ export function Header() {
         </div>
       </section>
       <nav className='flex gap-7 w-full px-content py-3 border-b border-black/10'>
-        <div className={`text-xl ${pathname === '/' && 'font-bold'}`}>
-          <Link href='/'>Home</Link>
-        </div>
-        <div
-          className={`text-xl ${
+        <Link
+          href='/'
+          className={`text-xl rounded-xl p-2 transition duration-500 hover:bg-neutral-100 ${
+            pathname === '/' && 'font-bold'
+          }`}
+        >
+          Home
+        </Link>
+        <Link
+          href='/articles'
+          className={`text-xl rounded-xl p-2 transition duration-500 hover:bg-neutral-100 ${
             pathname?.startsWith('/articles') && 'font-bold'
           }`}
         >
-          <Link href='/articles'>Articles</Link>
-        </div>
-        <div
-          className={`text-xl ${
+          Articles
+        </Link>
+        <Link
+          href='/advertisers'
+          className={`text-xl rounded-xl p-2 transition duration-500 hover:bg-neutral-100 ${
             pathname?.startsWith('/advertisers') && 'font-bold'
           }`}
         >
-          <Link href='/advertisers'>Advertisers</Link>
-        </div>
+          Advertisers
+        </Link>
       </nav>
     </header>
   )
