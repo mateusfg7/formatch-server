@@ -14,6 +14,7 @@ RUN corepack prepare yarn@stable --activate
 RUN wget https://github.com/planetscale/cli/releases/download/v0.129.0/pscale_0.129.0_linux_amd64.deb
 RUN sudo dpkg -i pscale_0.129.0_linux_amd64.deb
 RUN rm -rf pscale_0.129.0_linux_amd64.deb
+RUN mkdir -p /home/gitpod/.config/planetscale
 
 # Setup ZSH with Oh-My-Zsh
 RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
