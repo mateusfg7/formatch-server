@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { Trash } from 'phosphor-react'
+import { SmileySad, Trash } from 'phosphor-react'
 
 import { formatDate } from 'utils/formatDate'
 import { Header } from 'components/Header'
@@ -30,7 +29,8 @@ export default function Page() {
       const data: AdMeta[] = await fetch(`/api/advertisers/list`).then(
         (response) => response.json()
       )
-      setAdvertises(data)
+      // setAdvertises(data)
+      setAdvertises([])
       console.table(data)
       setIsLoading(false)
     }
@@ -85,8 +85,7 @@ export default function Page() {
             <Skeleton />
             <Skeleton />
           </>
-        ) : (
-          advertises.map((ad) => (
+        ) : advertises.length > 0 ? advertises.map((ad) => (
             <div
               key={ad.id}
               className='flex border-t border-black/10 first:border-none'
@@ -115,8 +114,13 @@ export default function Page() {
                 </button>
               </div> */}
             </div>
-          ))
-        )}
+          )
+        ): (
+          <div className='p-20 flex items-center justify-center gap-6 text-xl text-neutral-500'>
+          <span>Nenhum anunciante encontrado</span>
+          <SmileySad />
+        </div>
+        ) }
       </Container>
     </div>
   )
