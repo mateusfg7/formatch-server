@@ -38,6 +38,14 @@ export function Header() {
         >
           Advertisers
         </Link>
+        <Link
+          href='/docs'
+          className={`text-xl rounded-xl p-2 transition duration-500 hover:bg-neutral-100 ${
+            pathname?.startsWith('/docs') && 'font-bold'
+          }`}
+        >
+          API Docs
+        </Link>
       </nav>
     </header>
   )
