@@ -6,8 +6,8 @@
     "seed": "tsx prisma/seed.ts"
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "pnpm openapi:generate && next dev",
+    "build": "pnpm openapi:generate && next build",
     "start": "next start",
     "lint": "next lint",
     "db:dev": "pscale connect formatch initial-setup --port 3309",
