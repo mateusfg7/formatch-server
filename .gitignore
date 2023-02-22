@@ -169,3 +169,5 @@ dist
 prisma/debug
 
 .vscode
+
+public/openapi.json
