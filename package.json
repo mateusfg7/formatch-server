@@ -15,7 +15,8 @@
     "db:generate": "prisma generate",
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
-    "gp:browser": "/usr/bin/gp preview $(gp url 3000) --external"
+    "gp:browser": "/usr/bin/gp preview $(gp url 3000) --external",
+    "openapi:generate": "swagger-cli bundle --outfile public/openapi.json api-definitions/openapi.yml"
   },
   "dependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",
