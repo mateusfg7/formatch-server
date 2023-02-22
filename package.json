@@ -10,6 +10,7 @@
     "build": "pnpm openapi:generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "pnpm db:generate",
     "db:dev": "pscale connect formatch initial-setup --port 3309",
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
