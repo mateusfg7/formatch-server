@@ -8,7 +8,7 @@ specifiers:
   '@types/formidable': ^2.0.5
   '@types/jsonwebtoken': ^9.0.0
   '@types/node': 18.11.19
-  '@types/react': 18.0.27
+  '@types/react': 18.0.28
   '@types/react-dom': 18.0.10
   '@types/swagger-ui-react': ^4.11.0
   add: ^2.0.6
@@ -40,7 +40,7 @@ dependencies:
   '@google-cloud/storage': 6.9.3
   '@prisma/client': 4.10.1_prisma@4.10.1
   '@types/node': 18.11.19
-  '@types/react': 18.0.27
+  '@types/react': 18.0.28
   '@types/react-dom': 18.0.10
   add: 2.0.6
   date-fns: 2.29.3
@@ -52,7 +52,7 @@ dependencies:
   phosphor-react: 1.4.1_react@18.2.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
-  react-markdown: 8.0.5_3stiutgnnbnfnf3uowm5cip22i
+  react-markdown: 8.0.5_pmekkgnqduwlme35zpnqhenc34
   remark-gfm: 3.0.1
   short-unique-id: 4.4.4
   swagger-ui-react: 4.15.5_biqbaboplfbrettd7655fr4n2y
@@ -717,7 +717,7 @@ packages:
   /@types/hoist-non-react-statics/3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
     dependencies:
-      '@types/react': 18.0.27
+      '@types/react': 18.0.28
       hoist-non-react-statics: 3.3.2
     dev: false
 
@@ -749,20 +749,20 @@ packages:
   /@types/react-dom/18.0.10:
     resolution: {integrity: sha512-E42GW/JA4Qv15wQdqJq8DL4JhNpB3prJgjgapN3qJT9K2zO5IIAQh4VXvCEDupoqAwnz0cY4RlXeC/ajX5SFHg==}
     dependencies:
-      '@types/react': 18.0.27
+      '@types/react': 18.0.28
     dev: false
 
   /@types/react-redux/7.1.25:
     resolution: {integrity: sha512-bAGh4e+w5D8dajd6InASVIyCo4pZLJ66oLb80F9OBLO1gKESbZcRCJpTT6uLXX+HAB57zw1WTdwJdAsewuTweg==}
     dependencies:
       '@types/hoist-non-react-statics': 3.3.1
-      '@types/react': 18.0.27
+      '@types/react': 18.0.28
       hoist-non-react-statics: 3.3.2
       redux: 4.2.1
     dev: false
 
-  /@types/react/18.0.27:
-    resolution: {integrity: sha512-3vtRKHgVxu3Jp9t718R9BuzoD4NcQ8YJ5XRzsSKxNDiDonD2MXIT1TmSkenxuCycZJoQT5d2vE8LwWJxBC1gmA==}
+  /@types/react/18.0.28:
+    resolution: {integrity: sha512-RD0ivG1kEztNBdoAK7lekI9M+azSnitIn85h4iOiaLjaTrMjzslhaqCGaI4IyCJ1RljWiLCEu4jyrLLgqxBTew==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -774,7 +774,7 @@ packages:
   /@types/swagger-ui-react/4.11.0:
     resolution: {integrity: sha512-WPMR+GWbLd7zvY/uOTGzGzP44zK2rIZSnU00+pDR2YANnEV6/qj0kqYfdSY1Vk6qdvI7dR0Tx8JEMgUUrUQDjw==}
     dependencies:
-      '@types/react': 18.0.27
+      '@types/react': 18.0.28
     dev: true
 
   /@types/unist/2.0.6:
@@ -4051,7 +4051,7 @@ packages:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: false
 
-  /react-markdown/8.0.5_3stiutgnnbnfnf3uowm5cip22i:
+  /react-markdown/8.0.5_pmekkgnqduwlme35zpnqhenc34:
     resolution: {integrity: sha512-jGJolWWmOWAvzf+xMdB9zwStViODyyFQhNB/bwCerbBKmrTmgmA599CGiOlP58OId1IMoIRsA8UdI1Lod4zb5A==}
     peerDependencies:
       '@types/react': '>=16'
@@ -4059,7 +4059,7 @@ packages:
     dependencies:
       '@types/hast': 2.3.4
       '@types/prop-types': 15.7.5
-      '@types/react': 18.0.27
+      '@types/react': 18.0.28
       '@types/unist': 2.0.6
       comma-separated-tokens: 2.0.3
       hast-util-whitespace: 2.0.1
