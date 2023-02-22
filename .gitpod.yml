@@ -50,4 +50,4 @@ vscode:
 
 tasks:
   - name: Install Packages
-    command: yarn install
+    command: pnpm install

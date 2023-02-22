@@ -6,9 +6,13 @@ RUN sudo apt update && sudo apt upgrade -y
 # install-packages is a wrapper for `apt` that helps skip a few commands in the docker env.
 RUN sudo install-packages mysql-client
 
-# Setup Yarn
+# # Setup Yarn
+# RUN corepack enable
+# RUN corepack prepare yarn@stable --activate
+
+# Setup Pnpm
 RUN corepack enable
-RUN corepack prepare yarn@stable --activate
+RUN corepack prepare pnpm@latest --activate
 
 # Install planetscale-cli
 RUN wget https://github.com/planetscale/cli/releases/download/v0.129.0/pscale_0.129.0_linux_amd64.deb
