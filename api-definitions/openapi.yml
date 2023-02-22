@@ -1,0 +1,448 @@
+openapi: 3.0.0
+info:
+  title: Formatch API
+  version: 0.8.1
+  contact:
+    email: mateusfelipefg77@gmail.com
+externalDocs:
+  description: Find out more about Formatch
+  url: http://github.com/mateusfg7/formatch-web
+
+servers:
+  - url: https://formatch.vercel.app/api
+    description: Production API (Uses live data)
+
+paths:
+  /user:
+      get:
+        description: 'Get user data from a JWT Bearer Token'
+        summary: 'Get authenticated user data'
+        tags:
+          - User
+        security:
+          - BearerAuth: []
+        
+        responses:
+          '200':
+            description: User Data
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: Mateus Felipe
+                    email:
+                      type: string
+                      example: mateusfelipefg77@gmail.com
+                    avatar_url:
+                      type: string
+                      example: https://github.com/mateusfg7.png
+                    subscribe:
+                      type: boolean
+                      example: false
+          '5XX':
+            $ref: '#/components/responses/InternalServerError'
+          '405':
+            $ref: '#/components/responses/MethodNotAllowed'
+          '401':
+            $ref: "#/components/responses/UnauthorizedError"
+          '404':
+            $ref: '#/components/responses/UserNotFound'
+  /user/create:
+    post:
+      summary: Create a new user
+      description: Create a new user based on Google OAuth Information
+      tags:
+        - User
+      requestBody:
+        description: Access token from Google OAuth
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+
+      responses:
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '201':
+          description: Signed JWT Token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0ZXVzIEZlbGlwZSIsImVtYWlsIjoibWF0ZXVzZmVsaXBlZmc3N0BnbWFpbC5jb20iLCJhdmF0YXJfdXJsIjoiaHR0cHM6Ly9naXRodWIuY29tL21hdGV1c2ZnNy5wbmciLCJzdWJzY3JpYmUiOnRydWV9.qpGiiNauRf6P6aWlhRe-f3wIqZKlGHFd3RDyGc9F5RA"
+  /user/delete:
+    delete:
+      description: 'Delete an authenticated user'
+      summary: 'Delete user'
+      tags:
+        - User
+      security:
+          - BearerAuth: []
+      responses:
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '401':
+          $ref: "#/components/responses/UnauthorizedError"
+        '404':
+          $ref: '#/components/responses/UserNotFound'
+        '204':
+          description: User deleted successfully
+  /user/premium:
+    get:
+      description: Activate or deactivate premium subscription
+      summary: Toggle subscription
+      tags:
+        - User
+      security:
+        - BearerAuth: []
+      responses:
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '401':
+          $ref: "#/components/responses/UnauthorizedError"
+        '404':
+          $ref: "#/components/responses/UserNotFound"
+        '200':
+          description: Toggle subscription successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Premium subscribe activated
+  /user/saved:
+    get:
+      description: Return the list of saved professionals by user
+      summary: List of saved professionals
+      tags:
+        - User
+      security:
+        - BearerAuth: []
+      
+      responses:
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '401':
+          $ref: "#/components/responses/UnauthorizedError"
+        '404':
+          $ref: "#/components/responses/UserNotFound"
+        '200':
+          description: Get professional list successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: Professional code identifier
+                      example: d7v4s6
+                    profile_picture_url:
+                      type: string
+                      description: Profile picture url on Google Cloud Storage
+                      example: https://github.com/mateusfg7.png
+                    name:
+                      type: string
+                      description: Name of the professional
+                      example: Mateus Felipe
+                    email:
+                      nullable: true
+                      type: string
+                      description: Email contact (can be null)
+                      example: mateusfelipefg77@gmail.com
+                    phone:
+                      nullable: true
+                      type: string
+                      description: Phone contact (can be null)
+                      example: (37) 99999-9999
+                    whatsapp:
+                      nullable: true
+                      type: string
+                      description: Whatsapp contact (can be null)
+                      example: (37) 99999-9999
+                    instagram:
+                      nullable: true
+                      type: string
+                      description: Instagram user (can be null)
+                      example: '@user'
+                    state_uf:
+                      type: string
+                      description: State UF
+                      example: 'MG'
+                    city:
+                      type: string
+                      description: City based on state UF
+                      example: 'Pará de Minas'
+                    biography:
+                      type: string
+                      description: Professional biography like knowledge and experiences
+                      example: 'Some big text with 1 or more lines'
+                    createdAt:
+                      $ref: '#/components/schemas/type.dateFormat'
+                      description: Time of the professional creation as JS Date format
+                    updatedAt:
+                      $ref: '#/components/schemas/type.dateFormat'
+                      description: Time of the last professional info update as JS Date format
+
+  /rate/{code}:
+    get:
+      description: Create or update a rate value for the target professional
+      summary: Create/Update rate value
+      tags:
+        - Rate
+      security:
+        - BearerAuth: []
+      
+      parameters:
+        - in: path
+          name: code
+          required: true
+          description: Target professional code
+          schema:
+            type: string
+      responses:
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '401':
+          $ref: "#/components/responses/UnauthorizedError"
+        '404':
+          $ref: "#/components/responses/UserNotFound"
+        '400':
+          description: Bad Request
+        '201':
+          description: Rate successful creates/updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    $ref: '#/components/schemas/type.uuid'
+                    description: Rate UUID register on database
+                  userId:
+                    $ref: '#/components/schemas/type.uuid'
+                    description: UUID register from user who create the rating on database
+                  professionalId:
+                    type: string
+                    description: UUID register from target professional on database
+                    example: 84511f6a-9896-4d6b-b6ce-504bdb4f0cde
+                  rate_value:
+                    type: number
+                    description: Rate value
+                    example: 4
+                  createdAt:
+                      $ref: '#/components/schemas/type.dateFormat'
+                      description: Time of the professional creation as JS Date format
+                  updatedAt:
+                    $ref: '#/components/schemas/type.dateFormat'
+                    description: Time of the last professional info update as JS Date format
+
+  /article/{slug}:
+    parameters:
+        - in: path
+          name: slug
+          required:  true
+          description: Article slug
+          schema:
+            type: string
+            example: vantagens-e-desvantagens-do-tijolo-estrutural
+    get:
+      description: Get data from an determined article
+      summary: Get article data
+      tags:
+        - Article
+      responses:
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '400':
+          description: Bad Request
+        '404':
+          description: Article not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                    example: Article not found
+        '200':
+          description: Article loaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/object.Article'
+    delete:
+      description: Delete a determined article
+      summary: Delete article
+      tags:
+        - Article
+      responses:
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '400':
+          description: Bad Request
+        '404':
+          description: Article not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                    example: Article not found
+        '204':
+          description: Article deleted successfully
+
+tags:
+  - name: User
+    description: Everything about user profile operations
+  - name: Rate
+    description: Everything about rating system operations
+  - name: Article
+    description: Everything article/news operations
+
+components:
+  schemas:
+    type.dateFormat:
+      type: string
+      example: '2023-02-22T15:57:29.702Z'
+    type.uuid:
+      type: string
+      example: cf357229-0ba1-465c-821c-16b63139f1e8
+
+    object.Article:
+      type: object
+      properties:
+        id: 
+          $ref: '#/components/schemas/type.uuid'
+          description: Article UUID register on database
+        slug:
+          type: string
+          description: Article slug
+          example: vantagens-e-desvantagens-do-tijolo-estrutural
+        title:
+          type: string
+          description: Article title
+          example: Vantagens e Desvantagens do Tijolo Estrutural
+        banner_url:
+          type: string
+          description: Banner image url
+          example: https://images.unsplash.com/photo-1486406146926-c627a92ad1ab
+        content:
+          type: string
+          description: Article content
+        adMetaId:
+          $ref: '#/components/schemas/type.uuid'
+          nullable: true
+          description: Advertiser UUID on database
+        createdAt:
+          $ref: '#/components/schemas/type.dateFormat'
+          description: Time of the Article creation
+        updatedAt:
+          $ref: '#/components/schemas/type.dateFormat'
+          description: Time of the Article creation
+        AdMeta:
+          nullable: true
+          description: Advertiser metadata (can be null)
+          $ref: '#/components/schemas/object.AdMeta'
+    object.AdMeta:
+      type: object
+      properties:
+        id: 
+          $ref: '#/components/schemas/type.uuid'
+          description: Advertiser UUID register on database
+        name:
+          type: string
+          description: Advertiser name
+          example: Formatch Inc.
+        logo_url:
+          type: string
+          description: Logo URL
+          example: https://formatch.vercel.app/favicon.png
+        website_url:
+          type: string
+          description: Website
+          example: https://formatch.vercel.app
+        createdAt:
+         $ref: '#/components/schemas/type.dateFormat'
+        updatedAt:
+         $ref: '#/components/schemas/type.dateFormat'
+
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    UserNotFound:
+      description: User not found error'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    MethodNotAllowed:
+      description: Method not allowed
+      headers:
+        Allow:
+          description: List of allowed methods
+          schema:
+            type: string
+            anyOf:
+              - enum:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+      content:
+        text/plain:
+          schema:
+            type: string
+            description: Error message
+            example: Method GET Not Allowed
+    InternalServerError:
+      description: Internal Server Error
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWTpurposes
