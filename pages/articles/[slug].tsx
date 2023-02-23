@@ -15,6 +15,7 @@ interface Article {
   banner_url: string | null
   content: string
   adMetaId: string | null
+  sources: string[] | null
   createdAt: string
   updatedAt: string
   AdMeta: {
@@ -53,6 +54,25 @@ export default function Page({ article }: Props) {
         <ReactMarkdown className='markdown-content' remarkPlugins={[remarkGfm]}>
           {article.content}
         </ReactMarkdown>
+        {article.sources && (
+          <div>
+            <h2 className='text-2xl mb-3'>Fontes</h2>
+            <ul>
+              {article.sources.map((source) => (
+                <li key={source}>
+                  <a
+                    href={source}
+                    target='_blank'
+                    rel='noreferrer'
+                    className='text-blue-900 hover:underline'
+                  >
+                    {source}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         {article.AdMeta && (
           <div className='mt-14 p-10 flex bg-gradient-to-r from-transparent to-black/50 rounded-3xl'>
             <div className='flex-1 flex flex-col gap-6'>

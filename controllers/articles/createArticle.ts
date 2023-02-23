@@ -12,13 +12,7 @@ export async function createArticle(req: NextApiRequest, res: NextApiResponse) {
     banner_url: z.string().url(),
     content: z.string(),
     ad_name: z.string().optional(),
-    // ad_meta: z
-    //   .object({
-    //     name: z.string(),
-    //     logo_url: z.string().url(),
-    //     website_url: z.string().url(),
-    //   })
-    //   .optional(),
+    sources: z.array(z.string().url()).optional(),
   })
   const parsedArticle = articleSchema.safeParse(JSON.parse(body))
 
@@ -28,7 +22,7 @@ export async function createArticle(req: NextApiRequest, res: NextApiResponse) {
       error: parsedArticle.error.issues,
     })
 
-  const { title, banner_url, content, ad_name } = parsedArticle.data
+  const { title, banner_url, content, ad_name, sources } = parsedArticle.data
   const slug = title
     .toLowerCase()
     .normalize('NFD')
@@ -42,6 +36,7 @@ export async function createArticle(req: NextApiRequest, res: NextApiResponse) {
       banner_url,
       content,
       slug,
+      ...(sources && { source: sources?.map((src) => src.trim()).toString() }),
     }
 
     const existingArticle = await prismaClient.article.findUnique({

@@ -109,6 +109,7 @@ model Article {
   banner_url String?
   content    String  @db.MediumText
   adMetaId   String?
+  source     String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

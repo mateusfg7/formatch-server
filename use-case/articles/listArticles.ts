@@ -7,7 +7,12 @@ export async function listArticles() {
       include: { AdMeta: true },
     })
 
-    return articles
+    const parsedArticles = articles.map(({ source, ...rest }) => ({
+      ...(source && { sources: source?.split(',') }),
+      ...rest,
+    }))
+
+    return parsedArticles
   } catch (error) {
     console.log(error)
     throw error

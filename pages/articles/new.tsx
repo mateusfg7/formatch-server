@@ -1,11 +1,12 @@
 import { FormEvent, useEffect, useState } from 'react'
-import { Container } from 'components/Container'
-import { Header } from 'components/Header'
-import { AdMeta, Article } from '@prisma/client'
+import { useRouter } from 'next/navigation'
+import { AdMeta } from '@prisma/client'
+import { CircleNotch, Plus, Trash } from 'phosphor-react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { useRouter } from 'next/navigation'
-import { CircleNotch } from 'phosphor-react'
+
+import { Container } from 'components/Container'
+import { Header } from 'components/Header'
 
 export default function Page() {
   const [title, setTitle] = useState<string>()
@@ -13,6 +14,8 @@ export default function Page() {
   const [content, setContent] = useState<string>()
   const [advertizer, setAdvertizer] = useState<string | undefined>()
   const [adList, setAdList] = useState<string[]>([])
+  const [currentSource, setCurrentSource] = useState<string>('')
+  const [sourceList, setSourceList] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
   const router = useRouter()
@@ -26,6 +29,7 @@ export default function Page() {
       title,
       banner_url: bannerUrl,
       content,
+      ...(sourceList.length > 0 && { sources: sourceList }),
       ...(advertizer && advertizer.length > 0 && { ad_name: advertizer }),
     }
 
@@ -119,6 +123,58 @@ export default function Page() {
               </div>
             </div>
           </div>
+
+          <div className='flex flex-col gap-3 mb-7'>
+            <label className='text-2xl' htmlFor='source'>
+              Fontes
+            </label>
+            <div className='flex flex-col gap-3'>
+              <div className='flex-1 flex gap-3 flex-wrap'>
+                {sourceList.map((src) => (
+                  <div
+                    key={src}
+                    className='bg-neutral-100 rounded-md p-2 flex items-center gap-1'
+                  >
+                    <div>{src}</div>
+                    <button
+                      className='text-lg transition hover:text-red-600'
+                      onClick={() => {
+                        setSourceList([
+                          ...sourceList.filter((source) => source !== src),
+                        ])
+                      }}
+                    >
+                      <Trash />
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <div className='flex-1 flex gap-3'>
+                <input
+                  type='url'
+                  name='source'
+                  id='source'
+                  className='border border-neutral-400 rounded-md p-2 w-1/3'
+                  value={currentSource}
+                  onChange={(e) => setCurrentSource(e.target.value)}
+                />
+                <button
+                  type='button'
+                  title='Adicionar fonte'
+                  className='transition-colors duration-300 border border-neutral-400 hover:bg-neutral-200 text-neutral-500 hover:text-neutral-700 rounded-md p-3'
+                  onClick={() => {
+                    if (currentSource.length > 0) {
+                      setSourceList([...sourceList, currentSource])
+                      setCurrentSource('')
+                    }
+                  }}
+                >
+                  <Plus />
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div className='flex gap-3 mb-7'>
             <label className='text-2xl' htmlFor='anunciante'>
               Anunciante

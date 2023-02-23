@@ -2,12 +2,12 @@ import { prismaClient } from '@lib/prisma'
 
 export async function getArticle(slug: string) {
   try {
-    const article = await prismaClient.article.findUnique({
+    const { source, ...rest } = await prismaClient.article.findUniqueOrThrow({
       where: { slug },
       include: { AdMeta: true },
     })
 
-    return article
+    return { ...(source && { sources: source?.split(',') }), ...rest }
   } catch (error) {
     throw error
   }
