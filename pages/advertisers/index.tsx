@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { AdMeta } from '@prisma/client'
-import { SmileySad, Storefront, Trash } from 'phosphor-react'
+import { SmileySad, Storefront } from 'phosphor-react'
 
 import { formatDate } from 'utils/formatDate'
 import { Header } from 'components/Header'
@@ -12,29 +12,23 @@ export default function Page() {
   const [advertises, setAdvertises] = useState<AdMeta[]>([] as AdMeta[])
   const [isLoading, setIsLoading] = useState(true)
 
-  async function fetchAdvertisers() {
-    console.log('LOG | #1')
-
-    await fetch(`/api/advertisers/list`)
-      .then((response) => {
-        console.log('LOG | #2')
-        return response.json()
-      })
-      .then((data) => {
-        console.log('LOG | #3')
-        setAdvertises(data)
-      })
-      .catch((error) => {
-        console.log('LOG | #4')
-        console.log(error)
-      })
-      .finally(() => {
-        console.log('LOG | #5')
-        setIsLoading(false)
-      })
-  }
-
   useEffect(() => {
+    async function fetchAdvertisers() {
+      await fetch(`/api/advertisers/list`)
+        .then((response) => {
+          return response.json()
+        })
+        .then((data) => {
+          setAdvertises(data)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
+    }
+
     fetchAdvertisers()
   }, [])
 
