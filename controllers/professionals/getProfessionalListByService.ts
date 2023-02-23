@@ -19,12 +19,10 @@ export async function getProfessionalListByService(
   const parsedQuery = querySchema.safeParse(query)
 
   if (!parsedQuery.success) {
-    return res
-      .status(400)
-      .send({
-        message: 'Invalid query params',
-        error: parsedQuery.error.issues,
-      })
+    return res.status(400).send({
+      message: 'Invalid query params',
+      error: parsedQuery.error.issues,
+    })
   }
 
   const { service, uf, city } = parsedQuery.data
@@ -57,6 +55,11 @@ export async function getProfessionalListByService(
             rate_value: true,
           },
         },
+        User: {
+          select: {
+            subscribe: true,
+          },
+        },
       },
       orderBy: {
         name: 'asc',
@@ -72,6 +75,7 @@ export async function getProfessionalListByService(
           updatedAt,
           Rates,
           services: serviceList,
+          User: { subscribe },
           ...restIncludedProfessionalData
         } = professional
 
@@ -82,16 +86,21 @@ export async function getProfessionalListByService(
           (serviceData) => serviceData.service_name
         )
 
+        const emphasis = subscribe
+
         return {
           ...restIncludedProfessionalData,
           averageRate,
           services,
+          emphasis,
         }
       }
     )
 
+    const random_sort = () => Math.random() - 0.5
+
     return res.status(200).send({
-      professional_list: filteredProfessionalList,
+      professional_list: filteredProfessionalList.sort(random_sort),
     })
   } catch (error) {
     console.log(error)
