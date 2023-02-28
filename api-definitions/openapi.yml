@@ -373,6 +373,15 @@ components:
         updatedAt:
           $ref: '#/components/schemas/type.dateFormat'
           description: Time of the Article creation
+        sources:
+          nullable: true
+          description: List of sources
+          example:
+            - 'https://wikipedia.com/artigo'
+            - 'https://revista.com/noticia'
+          type: array
+          items:
+            type: string
         AdMeta:
           nullable: true
           description: Advertiser metadata (can be null)
