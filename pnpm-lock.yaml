@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@apidevtools/swagger-cli': ^4.0.4
   '@google-cloud/storage': ^6.8.0
-  '@mermaid-js/mermaid-cli': ^9.3.0
+  '@mermaid-js/mermaid-cli': ^10.0.0
   '@prisma/client': ^4.8.0
   '@types/formidable': ^2.0.5
   '@types/jsonwebtoken': ^9.0.0
@@ -61,14 +61,14 @@ dependencies:
   zod: 3.20.6
 
 devDependencies:
-  '@mermaid-js/mermaid-cli': 9.3.0_typescript@4.9.5
+  '@mermaid-js/mermaid-cli': 10.0.2_typescript@4.9.5
   '@types/formidable': 2.0.5
   '@types/jsonwebtoken': 9.0.1
   '@types/swagger-ui-react': 4.11.0
   autoprefixer: 10.4.13_postcss@8.4.21
   postcss: 8.4.21
   prisma: 4.10.1
-  prisma-erd-generator: 1.2.5_zwbgionfc6p7vzxn4kv64vucne
+  prisma-erd-generator: 1.2.5_irba2uyjadidkvb7oc2sjyq6wa
   tailwindcss: 3.2.7_postcss@8.4.21
   tsx: 3.12.3
 
@@ -462,13 +462,13 @@ packages:
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
     dev: false
 
-  /@mermaid-js/mermaid-cli/9.3.0_typescript@4.9.5:
-    resolution: {integrity: sha512-mjMGQTJys6HfUICwESbQhdNqbJA5JiW8Fp/QvOVnlz9bwRJPVJCW85bumEYu+eyE2sDuXszCu+T6yn+Lwjbw/w==}
+  /@mermaid-js/mermaid-cli/10.0.2_typescript@4.9.5:
+    resolution: {integrity: sha512-dz5ye9wWJjL3jtWtL6pYeKwo74CeCbn8SpvxKEH4Wuc0esDvSpxC+J/Wlsbd6BKvMzLN2J+5voy03kto0J7mOg==}
     engines: {node: ^14.13 || >=16.0}
     hasBin: true
     dependencies:
       chalk: 5.2.0
-      commander: 9.5.0
+      commander: 10.0.0
       puppeteer: 19.7.2_typescript@4.9.5
     transitivePeerDependencies:
       - bufferutil
@@ -1301,9 +1301,9 @@ packages:
     resolution: {integrity: sha512-Fu4hJdvzeylCfQPp9SGWidpzrMs7tTrlu6Vb8XGaRGck8QSNZJJp538Wrb60Lax4fPwR64ViY468OIUTbRlGZg==}
     dev: false
 
-  /commander/9.5.0:
-    resolution: {integrity: sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==}
-    engines: {node: ^12.20.0 || >=14}
+  /commander/10.0.0:
+    resolution: {integrity: sha512-zS5PnTI22FIRM6ylNW8G4Ap0IEOyk62fhLSD0+uHRT9McRCLGpkVNvao4bjimpK/GShynyQkFFxHhwMcETmduA==}
+    engines: {node: '>=14'}
     dev: true
 
   /compressible/2.0.18:
@@ -3818,7 +3818,7 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: false
 
-  /prisma-erd-generator/1.2.5_zwbgionfc6p7vzxn4kv64vucne:
+  /prisma-erd-generator/1.2.5_irba2uyjadidkvb7oc2sjyq6wa:
     resolution: {integrity: sha512-4Bjrsw4Db915qG1+oMZ4tUdXRcPAyExdraj/5qiWU6QD7m/6QLWJPVADDvqkAQVS3Y4vjWMZovD2eakKZWmZcw==}
     engines: {node: '>=14'}
     hasBin: true
@@ -3826,7 +3826,7 @@ packages:
       '@mermaid-js/mermaid-cli': ^8.14.0
       '@prisma/client': ^4.0.0
     dependencies:
-      '@mermaid-js/mermaid-cli': 9.3.0_typescript@4.9.5
+      '@mermaid-js/mermaid-cli': 10.0.2_typescript@4.9.5
       '@prisma/client': 4.10.1_prisma@4.10.1
       '@prisma/generator-helper': 4.10.1
       dotenv: 16.0.3
