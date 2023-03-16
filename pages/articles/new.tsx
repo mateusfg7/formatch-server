@@ -1,15 +1,25 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { AdMeta } from '@prisma/client'
-import { Check, CircleNotch, Plus, Trash, X } from 'phosphor-react'
+import {
+  Check,
+  CircleNotch,
+  DownloadSimple,
+  Image as ImageIcon,
+  Plus,
+  Trash,
+  X,
+} from 'phosphor-react'
 
 import { Container } from 'components/Container'
 import { Header } from 'components/Header'
 import { MarkdownEditor } from '@components/MarkdownEditor'
+import Image from 'next/image'
 
 export default function Page() {
   const [title, setTitle] = useState<string>()
   const [bannerUrl, setBannerUrl] = useState<string>()
+  const [bannerUrlPreview, setBannerUrlPreview] = useState<string>()
   const [content, setContent] = useState<string>()
   const [advertizer, setAdvertizer] = useState<string | undefined>()
   const [adList, setAdList] = useState<string[]>([])
@@ -92,15 +102,41 @@ export default function Page() {
             <label className='text-2xl' htmlFor='banner'>
               Banner URL
             </label>
-            <input
-              type='url'
-              id='banner'
-              name='banner'
-              value={bannerUrl}
-              onChange={(e) => setBannerUrl(e.target.value)}
-              className='border border-neutral-400 rounded-md p-2 w-full'
-              required
-            />
+            <div className='relative flex justify-center items-center h-32 w-full border border-neutral-300 rounded-md'>
+              {bannerUrlPreview &&
+              bannerUrlPreview.length > 7 &&
+              bannerUrlPreview.startsWith('http') ? (
+                <Image
+                  src={bannerUrlPreview}
+                  alt='Banner'
+                  className='object-cover'
+                  fill
+                />
+              ) : (
+                <ImageIcon
+                  weight='thin'
+                  className='text-6xl text-neutral-300'
+                />
+              )}
+            </div>
+            <div className='flex justify-between gap-4'>
+              <input
+                type='url'
+                id='banner'
+                name='banner'
+                value={bannerUrl}
+                onChange={(e) => setBannerUrl(e.target.value)}
+                className='border border-neutral-400 rounded-md p-2 w-full'
+                required
+              />
+              <button
+                type='button'
+                onClick={() => setBannerUrlPreview(bannerUrl)}
+                className='border border-neutral-400 rounded-md p-3'
+              >
+                <DownloadSimple className='text-neutral-500 text-lg' />
+              </button>
+            </div>
           </div>
 
           <div className='flex flex-col gap-3 mb-7'>
