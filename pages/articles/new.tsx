@@ -2,11 +2,10 @@ import { FormEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { AdMeta } from '@prisma/client'
 import { CircleNotch, Plus, Trash } from 'phosphor-react'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
 
 import { Container } from 'components/Container'
 import { Header } from 'components/Header'
+import { MarkdownEditor } from '@components/MarkdownEditor'
 
 export default function Page() {
   const [title, setTitle] = useState<string>()
@@ -78,7 +77,7 @@ export default function Page() {
               name='titulo'
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className='border border-neutral-400 rounded-md p-2 w-1/2'
+              className='border border-neutral-400 rounded-md p-2 w-full'
               required
             />
           </div>
@@ -93,7 +92,7 @@ export default function Page() {
               name='banner'
               value={bannerUrl}
               onChange={(e) => setBannerUrl(e.target.value)}
-              className='border border-neutral-400 rounded-md p-2 w-1/2'
+              className='border border-neutral-400 rounded-md p-2 w-full'
               required
             />
           </div>
@@ -102,26 +101,7 @@ export default function Page() {
             <label className='text-2xl' htmlFor='conteudo'>
               Conteúdo
             </label>
-            <div className='flex gap-3'>
-              <div className='flex-1'>
-                <textarea
-                  id='conteudo'
-                  name='conteudo'
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  className='border border-neutral-600 rounded-md p-2 w-full text-lg'
-                  required
-                />
-              </div>
-              <div className='flex-1 flex-wrap break-words border border-neutral-400 rounded-md p-2'>
-                <ReactMarkdown
-                  className='markdown-content'
-                  remarkPlugins={[remarkGfm]}
-                >
-                  {content ? String(content) : ''}
-                </ReactMarkdown>
-              </div>
-            </div>
+            <MarkdownEditor value={content as string} setValue={setContent} />
           </div>
 
           <div className='flex flex-col gap-3 mb-7'>
@@ -175,7 +155,7 @@ export default function Page() {
             </div>
           </div>
 
-          <div className='flex gap-3 mb-7'>
+          <div className='flex flex-col md:flex-row md:items-center gap-3 mb-7'>
             <label className='text-2xl' htmlFor='anunciante'>
               Anunciante
             </label>
