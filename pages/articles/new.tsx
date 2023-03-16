@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { AdMeta } from '@prisma/client'
-import { CircleNotch, Plus, Trash } from 'phosphor-react'
+import { Check, CircleNotch, Plus, Trash, X } from 'phosphor-react'
 
 import { Container } from 'components/Container'
 import { Header } from 'components/Header'
@@ -16,6 +16,8 @@ export default function Page() {
   const [currentSource, setCurrentSource] = useState<string>('')
   const [sourceList, setSourceList] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [isSuccessfulCreated, setIsSuccessfulCreated] = useState(false)
+  const [isError, setIsError] = useState(false)
 
   const router = useRouter()
 
@@ -43,9 +45,13 @@ export default function Page() {
         }
 
         const article = await response.json()
+        setIsSuccessfulCreated(true)
         router.push(`/articles/${encodeURI(article.slug)}`)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        setIsError(true)
+        console.log(error)
+      })
       .finally(() => setIsLoading(false))
   }
 
@@ -65,7 +71,7 @@ export default function Page() {
       <Container>
         <form
           onSubmit={handleForm}
-          className='border border-neutral-400 rounded-lg p-5 flex flex-col'
+          className='md:border border-neutral-400 rounded-lg p-1 md:p-5 flex flex-col'
         >
           <div className='flex flex-col gap-3 mb-7'>
             <label className='text-2xl' htmlFor='titulo'>
@@ -134,7 +140,7 @@ export default function Page() {
                   type='url'
                   name='source'
                   id='source'
-                  className='border border-neutral-400 rounded-md p-2 w-1/3'
+                  className='border border-neutral-400 rounded-md p-2 w-full md:w-1/2'
                   value={currentSource}
                   onChange={(e) => setCurrentSource(e.target.value)}
                 />
@@ -177,16 +183,43 @@ export default function Page() {
 
           <div className='mt-5 flex justify-end'>
             <button
-              type={!isLoading ? 'submit' : 'button'}
-              className={`flex gap-2 items-center p-3 rounded-md text-blue-900 bg-blue-200/50 ${
-                !isLoading && 'hover:bg-blue-200'
-              } text-lg`}
+              type={
+                !isLoading && !isError && !isSuccessfulCreated
+                  ? 'submit'
+                  : 'button'
+              }
+              className={`flex gap-4 items-center justify-center w-full md:w-32 p-6 md:p-3 rounded-md text-blue-900 text-lg ${
+                !isSuccessfulCreated && !isError && 'bg-blue-200/50'
+              } ${
+                !isLoading &&
+                isSuccessfulCreated &&
+                !isError &&
+                'bg-green-200/50'
+              } ${
+                !isLoading && !isSuccessfulCreated && isError && 'bg-red-200/50'
+              } ${
+                !isLoading &&
+                !isSuccessfulCreated &&
+                !isError &&
+                'hover:bg-blue-200'
+              }`}
             >
-              {!isLoading ? (
-                'Criar artigo'
-              ) : (
+              {!isLoading && !isSuccessfulCreated && !isError && 'Criar artigo'}
+              {!isLoading && isSuccessfulCreated && !isError && (
                 <>
-                  <CircleNotch className='animate-spin' />
+                  <Check className='text-green-900' />
+                  <span className='text-green-900'>Sucesso</span>
+                </>
+              )}
+              {!isLoading && !isSuccessfulCreated && isError && (
+                <>
+                  <X className='text-red-900' />
+                  <span className='text-red-900'>Erro</span>
+                </>
+              )}
+              {isLoading && !isSuccessfulCreated && !isError && (
+                <>
+                  <CircleNotch weight='bold' className='animate-spin' />
                   <span>Criando...</span>
                 </>
               )}
