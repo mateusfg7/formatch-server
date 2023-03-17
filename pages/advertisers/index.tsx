@@ -93,10 +93,10 @@ export default function Page() {
           advertises.map((ad) => (
             <div
               key={ad.id}
-              className='flex border-b border-black/10 last:border-none group'
+              className='flex border-b border-black/10 last:border-none'
             >
-              <div className='flex-1 py-1 flex gap-7 group-hover:cursor-pointer'>
-                <div className='relative flex items-center justify-center w-[14%] rounded-xl overflow-hidden p-2 transition duration-500 bg-neutral-300 group-hover:bg-neutral-400 border border-neutral-500'>
+              <div className='flex-1 py-1 flex gap-7'>
+                <div className='relative hidden sm:flex items-center justify-center w-[14%] min-w-[110px] rounded-xl overflow-hidden p-2 transition duration-500 bg-neutral-300 border border-neutral-500'>
                   <div className='relative w-full h-full'>
                     <Image
                       src={ad.logo_url}
