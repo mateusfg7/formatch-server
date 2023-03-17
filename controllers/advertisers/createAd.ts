@@ -3,13 +3,16 @@ import { z } from 'zod'
 
 import { prismaClient } from '@lib/prisma'
 
-export async function createAdController(req: NextApiRequest, res: NextApiResponse) {
+export async function createAdController(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { body } = req
 
   const bodySchema = z.object({
     name: z.string(),
     logo_url: z.string(),
-    website: z.string().url()
+    contact: z.string(),
   })
   const parsedBody = bodySchema.safeParse(JSON.parse(body))
 
@@ -19,11 +22,9 @@ export async function createAdController(req: NextApiRequest, res: NextApiRespon
       error: parsedBody.error.issues,
     })
 
-  const { logo_url, name, website } = parsedBody.data
- 
+  const { logo_url, name, contact } = parsedBody.data
 
   try {
-
     const existingAd = await prismaClient.adMeta.findUnique({
       where: {
         name,
@@ -34,10 +35,10 @@ export async function createAdController(req: NextApiRequest, res: NextApiRespon
       await prismaClient.adMeta.create({
         data: {
           name,
-            logo_url,
-            website_url: website
-           }
-        })
+          logo_url,
+          contact,
+        },
+      })
     } else {
       return res.status(409).json({ message: 'Advertiser already registered.' })
     }

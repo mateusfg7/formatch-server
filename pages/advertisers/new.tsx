@@ -7,7 +7,7 @@ import { Check, CircleNotch, X } from 'phosphor-react'
 export default function Page() {
   const [adName, setAdName] = useState<string>()
   const [adLogoUrl, setAdLogoUrl] = useState<string>()
-  const [website, setWebsite] = useState<string>()
+  const [contact, setContact] = useState<string>()
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccessfulCreated, setIsSuccessfulCreated] = useState(false)
   const [isError, setIsError] = useState(false)
@@ -22,7 +22,7 @@ export default function Page() {
     let data = {
       name: adName,
       logo_url: adLogoUrl,
-      website,
+      contact,
     }
 
     await fetch('/api/advertisers/create', {
@@ -84,15 +84,15 @@ export default function Page() {
           </div>
 
           <div className='flex flex-col gap-3 mb-7'>
-            <label className='text-2xl' htmlFor='webite'>
-              Website
+            <label className='text-2xl' htmlFor='contact'>
+              Contacto
             </label>
             <input
-              type='url'
-              id='webite'
-              name='webite'
-              value={website}
-              onChange={(e) => setWebsite(e.target.value)}
+              type='text'
+              id='contact'
+              name='contact'
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
               className='border border-neutral-400 rounded-md p-2 w-full'
               required
             />
