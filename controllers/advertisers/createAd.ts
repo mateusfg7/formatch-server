@@ -36,6 +36,7 @@ export async function createAdController(
         data: {
           name,
           logo_url,
+          website_url: contact,
           contact,
         },
       })
