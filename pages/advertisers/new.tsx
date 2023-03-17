@@ -2,13 +2,15 @@ import { FormEvent, useState } from 'react'
 import { Container } from 'components/Container'
 import { Header } from 'components/Header'
 import { useRouter } from 'next/navigation'
-import { CircleNotch } from 'phosphor-react'
+import { Check, CircleNotch, X } from 'phosphor-react'
 
 export default function Page() {
   const [adName, setAdName] = useState<string>()
   const [adLogoUrl, setAdLogoUrl] = useState<string>()
   const [website, setWebsite] = useState<string>()
   const [isLoading, setIsLoading] = useState(false)
+  const [isSuccessfulCreated, setIsSuccessfulCreated] = useState(false)
+  const [isError, setIsError] = useState(false)
 
   const router = useRouter()
 
@@ -29,12 +31,17 @@ export default function Page() {
     })
       .then(async (response) => {
         if (response.status !== 201) {
+          setIsError(true)
           console.error(`${response.status} ${response.statusText}`)
           return
         }
+        setIsSuccessfulCreated(true)
         router.push(`/advertisers`)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        setIsError(true)
+        console.log(error)
+      })
       .finally(() => setIsLoading(false))
   }
 
@@ -44,7 +51,7 @@ export default function Page() {
       <Container>
         <form
           onSubmit={handleForm}
-          className='border border-neutral-400 rounded-lg p-5 flex flex-col'
+          className='border border-neutral-400 rounded-lg p-2 md:p-5 flex flex-col'
         >
           <div className='flex flex-col gap-3 mb-7'>
             <label className='text-2xl' htmlFor='titulo'>
@@ -56,7 +63,7 @@ export default function Page() {
               name='titulo'
               value={adName}
               onChange={(e) => setAdName(e.target.value)}
-              className='border border-neutral-400 rounded-md p-2 w-1/2'
+              className='border border-neutral-400 rounded-md p-2 w-full'
               required
             />
           </div>
@@ -71,7 +78,7 @@ export default function Page() {
               name='logo_url'
               value={adLogoUrl}
               onChange={(e) => setAdLogoUrl(e.target.value)}
-              className='border border-neutral-400 rounded-md p-2 w-1/2'
+              className='border border-neutral-400 rounded-md p-2 w-full'
               required
             />
           </div>
@@ -86,23 +93,53 @@ export default function Page() {
               name='webite'
               value={website}
               onChange={(e) => setWebsite(e.target.value)}
-              className='border border-neutral-400 rounded-md p-2 w-1/2'
+              className='border border-neutral-400 rounded-md p-2 w-full'
               required
             />
           </div>
 
           <div className='mt-5 flex justify-end'>
             <button
-              type={!isLoading ? 'submit' : 'button'}
-              className={`flex gap-2 items-center p-3 rounded-md text-blue-900 bg-blue-200/50 ${
-                !isLoading && 'hover:bg-blue-200'
-              } text-lg`}
+              type={
+                !isLoading && !isError && !isSuccessfulCreated
+                  ? 'submit'
+                  : 'button'
+              }
+              className={`flex gap-4 items-center justify-center w-full md:w-44 p-6 md:p-3 rounded-md text-blue-900 text-lg ${
+                !isSuccessfulCreated && !isError && 'bg-blue-200/50'
+              } ${
+                !isLoading &&
+                isSuccessfulCreated &&
+                !isError &&
+                'bg-green-200/50'
+              } ${
+                !isLoading && !isSuccessfulCreated && isError && 'bg-red-200/50'
+              } ${
+                !isLoading &&
+                !isSuccessfulCreated &&
+                !isError &&
+                'hover:bg-blue-200'
+              }`}
             >
-              {!isLoading ? (
-                'Criar anunciante'
-              ) : (
+              {!isLoading &&
+                !isSuccessfulCreated &&
+                !isError &&
+                'Criar anunciante'}
+              {!isLoading && isSuccessfulCreated && !isError && (
                 <>
-                  <CircleNotch className='animate-spin' />
+                  <Check className='text-green-900' />
+                  <span className='text-green-900'>Sucesso</span>
+                </>
+              )}
+              {!isLoading && !isSuccessfulCreated && isError && (
+                <>
+                  <X className='text-red-900' />
+                  <span className='text-red-900'>Erro</span>
+                </>
+              )}
+              {isLoading && !isSuccessfulCreated && !isError && (
+                <>
+                  <CircleNotch weight='bold' className='animate-spin' />
                   <span>Criando...</span>
                 </>
               )}
