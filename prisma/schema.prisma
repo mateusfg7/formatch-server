@@ -132,7 +132,6 @@ model Feedback {
   type    FeedbackType
   name    String?
   email   String?
-  phone   String?
   message String       @db.MediumText
 
   createdAt DateTime @default(now())
