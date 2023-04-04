@@ -120,3 +120,20 @@ model Article {
   @@index([adMetaId])
   @@map("articles")
 }
+
+enum FeedbackType {
+  SUGEST
+  ERROR
+}
+
+model Feedback {
+  id String @id @default(uuid())
+
+  type    FeedbackType
+  name    String?
+  email   String?
+  phone   String?
+  message String       @db.MediumText
+
+  createdAt DateTime @default(now())
+}
