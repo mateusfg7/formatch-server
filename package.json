@@ -1,6 +1,6 @@
 {
   "name": "formatch-web",
-  "version": "0.8.5",
+  "version": "0.9.0",
   "private": true,
   "prisma": {
     "seed": "tsx prisma/seed.ts"
