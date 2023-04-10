@@ -6,6 +6,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log("\n-------------- LOG #1 --------------\n")
+  console.log(req)
+  console.log("\n------------------------------------\n")
+  
   const { method } = req
 
   if (method === 'POST') createProfessional(req, res)
