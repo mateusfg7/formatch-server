@@ -12,6 +12,10 @@ export async function createProfessional(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log("\n-------------- LOG #2 --------------\n")
+  console.log(req)
+  console.log("\n------------------------------------\n")
+  
   try {
     form.parse(req, async (err, rawFields, files) => {
       if (err) {
@@ -102,8 +106,12 @@ export async function createProfessional(
       const gcsFilePath = `assets/professionals/picture/${newFileName}`
 
       try {
+        console.log("\n-------------- LOG #3 --------------\n")
+        
         const fileUrlOnGCS = await uploadFileToGCS(localFilePath, gcsFilePath)
 
+        console.log("\n-------------- LOG #4 --------------\n")
+        
         const professional = await prismaClient.professional.create({
           data: {
             name,
@@ -146,7 +154,9 @@ export async function createProfessional(
           services: serviceList,
           ...rest
         } = professional
-
+        
+        console.log("\n-------------- LOG #5 --------------\n")
+        
         return res.status(201).json({
           ...rest,
           savedCount: 0,
