@@ -1,6 +1,6 @@
 {
   "name": "formatch-web",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "private": true,
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -39,7 +39,7 @@
     "react-markdown": "^8.0.5",
     "remark-gfm": "^3.0.1",
     "short-unique-id": "^4.4.4",
-    "swagger-ui-react": "^4.15.5",
+    "swagger-ui-react": "^5.0.0",
     "typescript": "4.9.5",
     "yarn": "^1.22.19",
     "zod": "^3.20.2"
