@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@apidevtools/swagger-cli':
     specifier: ^4.0.4
@@ -32,8 +36,8 @@ dependencies:
     specifier: 13.2.4
     version: 13.2.4(eslint@8.33.0)(typescript@4.9.5)
   formidable:
-    specifier: ^2.1.1
-    version: 2.1.1
+    specifier: ^3.0.0
+    version: 3.1.3
   jose:
     specifier: ^4.11.2
     version: 4.12.0
@@ -76,8 +80,8 @@ devDependencies:
     specifier: ^10.0.0
     version: 10.0.2(typescript@4.9.5)
   '@types/formidable':
-    specifier: ^2.0.5
-    version: 2.0.5
+    specifier: ^3.0.0
+    version: 3.4.0
   '@types/jsonwebtoken':
     specifier: ^9.0.0
     version: 9.0.1
@@ -734,8 +738,8 @@ packages:
     dependencies:
       '@types/ms': 0.7.31
 
-  /@types/formidable@2.0.5:
-    resolution: {integrity: sha512-uvMcdn/KK3maPOaVUAc3HEYbCEhjaGFwww4EsX6IJfWIJ1tzHtDHczuImH3GKdusPnAAmzB07St90uabZeCKPA==}
+  /@types/formidable@3.4.0:
+    resolution: {integrity: sha512-JXP+LsspYYBIJJxZ9VJsswb5U1hkUUhLmtAb6EB1SWcDDbJQlWRhGoZYasMSnk2NsqtUEHd3uuaiImmSys+8AQ==}
     dependencies:
       '@types/node': 18.11.19
     dev: true
@@ -1527,8 +1531,8 @@ packages:
     resolution: {integrity: sha512-pmMDBKiRVjh0uKK6CT1WqZmM3hBVSgD+N2MrgyV1uNizAZMw4tx6i/RTc+/uCsKSCmg0xXx7arCP/OFcIwTsiQ==}
     dev: true
 
-  /dezalgo@1.0.4:
-    resolution: {integrity: sha512-rXSP0bf+5n0Qonsb+SVVfNfIsimO4HEtmnIpPHY8Q1UCzKlQrDMfdobr8nJOOsRgWCyMRqeSBQzmWUMq7zvVig==}
+  /dezalgo@1.0.3:
+    resolution: {integrity: sha512-K7i4zNfT2kgQz3GylDw40ot9GAE47sFZ9EXHFSPP6zONLgH6kWXE0KWJchkbQJLBkRazq4APwZ4OwiFFlT95OQ==}
     dependencies:
       asap: 2.0.6
       wrappy: 1.0.2
@@ -2190,13 +2194,12 @@ packages:
       web-streams-polyfill: 4.0.0-beta.3
     dev: false
 
-  /formidable@2.1.1:
-    resolution: {integrity: sha512-0EcS9wCFEzLvfiks7omJ+SiYJAiD+TzK4Pcw1UlUoGnhUxDcMKjt0P7x8wEb0u6OHu8Nb98WG3nxtlF5C7bvUQ==}
+  /formidable@3.1.3:
+    resolution: {integrity: sha512-nPy5vK/zvhlGBvIb1RqNLAk2D3kM+Dqz9tuaVFez2fogTaYDSPPpBbJpmy2FOmPv+JN4rqQRf4C3wdg6eqV47Q==}
     dependencies:
-      dezalgo: 1.0.4
+      dezalgo: 1.0.3
       hexoid: 1.0.0
       once: 1.4.0
-      qs: 6.11.0
     dev: false
 
   /fraction.js@4.2.0:
