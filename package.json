@@ -1,6 +1,6 @@
 {
   "name": "formatch-web",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "private": true,
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -28,7 +28,7 @@
     "@types/react-dom": "18.0.11",
     "add": "^2.0.6",
     "date-fns": "^2.29.3",
-    "eslint": "8.33.0",
+    "eslint": "8.57.0",
     "eslint-config-next": "13.2.4",
     "formidable": "^2.1.1",
     "jose": "^4.11.2",
